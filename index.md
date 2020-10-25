@@ -15,18 +15,18 @@
 | Command | Syntax | Details |
 | ------------- | ------------- | ------------- |
 | **Anime** |
-| airing | \[latest \| next x hours\] | desc |
-| anilist | \[username\] | desc |
-| animesearch | \[help\] | desc |
+| airing | \[latest \| next x hours\] | Lists all airing anime that devs are watching |
+| anilist | \[username\] | Gets the anilist profile of \<username\> |
+| animesearch | \[help\] | Searches anime based on genres and tags (refer to help) |
 | **Image Manipulation** |
-| compressimage | \<attachment\> | desc |
+| compressimage | \<attachment\> | Compresses the attachment image |
 | **Time** |
-| parsedate | \<epoch\> | desc |
-| timezone | \<timezone\> | desc |
+| parsedate | \<epoch\> | Converts the epoch time to AEST formatted date |
+| timezone | \<timezone\> | Gets current time in \<timezone\> |
 | **Bot** |
-| clearcache | | desc |
-| purgeself | \[messages to scan\] | desc |
+| clearcache | | Cleares player files |
+| purgeself | \[messages to scan\] | Deletes bots' own messages within the last \[messages\] |
 | **Other** |
-| charcount | \<input\> | desc |
-| convert | \[help\] | desc |
-| eval | \<js\> | desc |
+| charcount | \<input\> | Gets character count of \<input\> |
+| convert | \[help\] | Converts the input parameters (refer to help) |
+| eval | \<js\> | Runs javascript code |
