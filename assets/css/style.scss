@@ -2,25 +2,24 @@
 ---
 
 @import "{{ site.theme }}";
-
-#main_content_wrap {
-    background-color: #343434;
-}
-
 table {
   border-collapse: collapse;
   width: 100%;
 }
 
-table tr:nth-child(even){background-color: #f2f2f2;}
+#main_content_wrap {
+    background-color: #343434;
+}
 
-table tr:hover {background-color: #ddd;}
+table tr:nth-child(even){background-color: #4f4f4f;}
+
+table tr:hover {background-color: #878787;}
 
 table td {
   font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   padding: 10px;
   text-align: left;
-  color: #373737;
+  color: white;
 }
 
 table th {
