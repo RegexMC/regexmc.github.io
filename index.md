@@ -1,29 +1,26 @@
-## Welcome to GitHub Pages
+## Commands
 
-You can use the [editor on GitHub](https://github.com/RegexMC/regexbotsite/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+| Command Syntax  | Details |
+| ------------- | ------------- |
+| **Hypixel** |
+| stats \<ign\>  | Gets the players general Hypixel stats |
+| skywars \<ign\>  | Gets the players Skywars stats |
+| ranked \<ign\>  | Gets the players Ranked Skywars stats |
+| bedwars \<ign\>  | Gets the players Bedwars stats |
+| **General** |
+| help | Send list of commands and link to this page |
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Bot Developer Commands
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+| Command Syntax  | Details |
+| ------------- | ------------- |
+| airing \[latest\|next x hours\] | desc |
+| anilist \[username\] | desc |
+| animesearch \[help\] | desc |
+| compressimage \<attachment\> | desc |
+| charcount \<input\> | desc |
+| clearcache | desc |
+| convert \[help\] | desc |
+| eval \<js\> | desc |
+| parsedate \<epoch>] | desc |
+| timezone \<timezone\> | desc |
