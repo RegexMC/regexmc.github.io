@@ -3,6 +3,10 @@
 
 @import "{{ site.theme }}";
 
+#main_content_wrap {
+    background-color: #343434;
+}
+
 table {
   border-collapse: collapse;
   width: 100%;
