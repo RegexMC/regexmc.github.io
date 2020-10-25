@@ -21,7 +21,7 @@
 | **Image Manipulation** |
 | compressimage | \<attachment\> | desc |
 | **Time** |
-| parsedate | \<epoch>] | desc |
+| parsedate | \<epoch\> | desc |
 | timezone | \<timezone\> | desc |
 | **Other** |
 | charcount | \<input\> | desc |
