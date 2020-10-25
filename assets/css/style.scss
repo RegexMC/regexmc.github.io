@@ -12,9 +12,16 @@ table tr:nth-child(even){background-color: #f2f2f2;}
 
 table tr:hover {background-color: #ddd;}
 
-table td, table th {
+table td {
   font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   padding: 10px;
   text-align: left;
   color: #373737;
+}
+
+table th {
+  font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  padding: 10px;
+  text-align: left;
+  color: white;
 }
