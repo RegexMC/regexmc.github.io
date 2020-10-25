@@ -14,7 +14,7 @@ table {
 
 table tr:nth-child(even){background-color: #9e9e9e;}
 
-table th:hover {background-color: #686868;}
+table tbody tr:hover {background-color: #686868;}
 
 table td {
   font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
