@@ -24,7 +24,7 @@
 | parsedate | \<epoch\> | Converts the epoch time to AEST formatted date |
 | timezone | \<timezone\> | Gets current time in \<timezone\> |
 | **Bot** |
-| clearcache | | Cleares player files |
+| clearcache | | Clears player files |
 | purgeself | \[messages to scan\] | Deletes bots' own messages within the last \[messages\] |
 | **Other** |
 | charcount | \<input\> | Gets character count of \<input\> |
