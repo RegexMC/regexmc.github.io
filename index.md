@@ -23,8 +23,10 @@
 | **Time** |
 | parsedate | \<epoch\> | desc |
 | timezone | \<timezone\> | desc |
+| **Bot** |
+| clearcache | | desc |
+| purgeself | \[messages to scan\] | desc |
 | **Other** |
 | charcount | \<input\> | desc |
-| clearcache | | desc |
 | convert | \[help\] | desc |
 | eval | \<js\> | desc |
