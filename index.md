@@ -12,15 +12,15 @@
 
 ## Bot Developer Commands
 
-| Command Syntax  | Details |
-| ------------- | ------------- |
-| airing \[latest\|next x hours\] | desc |
-| anilist \[username\] | desc |
-| animesearch \[help\] | desc |
-| compressimage \<attachment\> | desc |
-| charcount \<input\> | desc |
-| clearcache | desc |
-| convert \[help\] | desc |
-| eval \<js\> | desc |
-| parsedate \<epoch>] | desc |
-| timezone \<timezone\> | desc |
+| Command | Syntax | Details |
+| ------------- | ------------- | ------------- |
+| airing | \[latest \| next x hours\] | desc |
+| anilist | \[username\] | desc |
+| animesearch | \[help\] | desc |
+| compressimage | \<attachment\> | desc |
+| charcount | \<input\> | desc |
+| clearcache | | desc |
+| convert | \[help\] | desc |
+| eval | \<js\> | desc |
+| parsedate | \<epoch>] | desc |
+| timezone | \<timezone\> | desc |
