@@ -14,13 +14,17 @@
 
 | Command | Syntax | Details |
 | ------------- | ------------- | ------------- |
+| **Anime** |
 | airing | \[latest \| next x hours\] | desc |
 | anilist | \[username\] | desc |
 | animesearch | \[help\] | desc |
+| **Image Manipulation** |
 | compressimage | \<attachment\> | desc |
+| **Time** |
+| parsedate | \<epoch>] | desc |
+| timezone | \<timezone\> | desc |
+| **Other** |
 | charcount | \<input\> | desc |
 | clearcache | | desc |
 | convert | \[help\] | desc |
 | eval | \<js\> | desc |
-| parsedate | \<epoch>] | desc |
-| timezone | \<timezone\> | desc |
