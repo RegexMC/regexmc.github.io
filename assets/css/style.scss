@@ -21,6 +21,6 @@ table td {
 }
 
 
-table td:nth-child(even){background-color: #9e9e9e;}
+table tr:nth-child(even){background-color: #9e9e9e;}
 
-table td:hover {background-color: #686868;}
+table tr:hover {background-color: #686868;}
