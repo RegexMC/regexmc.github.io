@@ -1,14 +1,14 @@
 ## Commands
 
-| Command Syntax  | Details |
-| ------------- | ------------- |
+| Command | Syntax  | Details |
+| ------------- | ------------- | ------------- |
 | **Hypixel** |
-| stats \<ign\>  | Gets the players general Hypixel stats |
-| skywars \<ign\>  | Gets the players Skywars stats |
-| ranked \<ign\>  | Gets the players Ranked Skywars stats |
-| bedwars \<ign\>  | Gets the players Bedwars stats |
+| stats | \<ign\> | Gets the players general Hypixel stats |
+| skywars | \<ign\> | Gets the players Skywars stats |
+| ranked | \<ign\> | Gets the players Ranked Skywars stats |
+| bedwars | \<ign\> | Gets the players Bedwars stats |
 | **General** |
-| help | Send list of commands and link to this page |
+| help | | Send list of commands and link to this page |
 
 ## Bot Developer Commands
 
