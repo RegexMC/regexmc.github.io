@@ -18,6 +18,8 @@
 | airing | \[latest \| next x hours\] | Lists all airing anime that devs are watching |
 | anilist | \[username\] | Gets the anilist profile of \<username\> |
 | animesearch | \[help\] | Searches anime based on genres and tags (refer to help) |
+| hentaisearch | \[help\] | Searches nhentai based on tags (refer to help) |
+| randomhentai |  | Gets a random doujinshi from nhentai |
 | **Image Manipulation** |
 | compressimage | \<attachment\> | Compresses the attachment image |
 | **Time** |
