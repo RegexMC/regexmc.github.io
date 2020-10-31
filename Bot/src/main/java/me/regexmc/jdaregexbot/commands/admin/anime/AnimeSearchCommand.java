@@ -491,7 +491,7 @@ public class AnimeSearchCommand extends Command {
                                 String description = animeObject.isNull("description") ? "" : Jsoup.parse(animeObject.getString("description")).text();
 
                                 if (description.length() > finalMaxCharsInDesc)
-                                    description = description.substring(0, finalMaxCharsInDesc-3)+"...";
+                                    description = description.substring(0, finalMaxCharsInDesc - 3) + "...";
 
                                 String value = "[Link](" + siteUrl + " '" + siteUrl + "')\n" +
                                         "Score: " + averageScore + "\n" +

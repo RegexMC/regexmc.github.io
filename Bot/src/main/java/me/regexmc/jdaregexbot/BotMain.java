@@ -103,11 +103,11 @@ public class BotMain extends ListenerAdapter {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(now);
         int mod = calendar.get(Calendar.MINUTE) % 15;
-        calendar.add(Calendar.MINUTE, mod < 8 ? -mod : (15-mod));
-        long dateDiff = getDateDiff(now,calendar.getTime(), TimeUnit.MINUTES);
-        long minutes = dateDiff<0 ? 15+dateDiff : dateDiff;
+        calendar.add(Calendar.MINUTE, mod < 8 ? -mod : (15 - mod));
+        long dateDiff = getDateDiff(now, calendar.getTime(), TimeUnit.MINUTES);
+        long minutes = dateDiff < 0 ? 15 + dateDiff : dateDiff;
 
-        timer.schedule(new AnimeNotification(), minutes*60 * 1000, 30 * 60 * 1000);
+        timer.schedule(new AnimeNotification(), minutes * 60 * 1000, 30 * 60 * 1000);
         Utils.log("Started Notification timer loop", Utils.ErrorTypes.INFO);
     }
 
@@ -162,8 +162,9 @@ public class BotMain extends ListenerAdapter {
             }
         }
     }
+
     public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
         long diffInMillies = date2.getTime() - date1.getTime();
-        return timeUnit.convert(diffInMillies,TimeUnit.MILLISECONDS);
+        return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
     }
 }

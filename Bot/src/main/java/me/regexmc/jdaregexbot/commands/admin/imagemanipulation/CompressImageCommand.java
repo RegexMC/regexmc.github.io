@@ -118,10 +118,11 @@ public class CompressImageCommand extends Command {
                     Utils.log(e, Utils.ErrorTypes.ERROR);
                     e.printStackTrace();
                 }
+
+                event.getMessage().delete().queue();
             } else {
                 event.reply("Please attach an image");
             }
-
         }
     }
 }

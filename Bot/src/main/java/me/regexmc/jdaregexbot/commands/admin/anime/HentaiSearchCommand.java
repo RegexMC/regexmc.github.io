@@ -144,18 +144,18 @@ public class HentaiSearchCommand extends Command {
                     event.reply("Invalid ID provided");
                     return;
                 }
-                formattedQuery = isId ? "https://nhentai.net/g/" + id: "https://nhentai.net/search/?q=" + URLEncoder.encode(query, StandardCharsets.UTF_8) + sortQuery;
+                formattedQuery = isId ? "https://nhentai.net/g/" + id : "https://nhentai.net/search/?q=" + URLEncoder.encode(query, StandardCharsets.UTF_8) + sortQuery;
                 Document doc = Jsoup.connect(formattedQuery).get();
 
                 if (isId) {
-                    AtomicReference < String > pages = new AtomicReference < >("");
+                    AtomicReference<String> pages = new AtomicReference<>("");
 
                     Elements hrefs = doc.select("a[href]");
                     StringBuilder tags = new StringBuilder();
                     tags.append("`");
                     String title = doc.title();
                     String favourites = doc.select("a .nobold").text().replace("(", "").replace(")", "");
-                    hrefs.forEach(t ->{
+                    hrefs.forEach(t -> {
                         if (t.attr("href").startsWith("/tag/")) {
                             String tag = t.attr("href").substring(5);
                             tag = tag.substring(0, tag.length() - 1);
@@ -174,7 +174,7 @@ public class HentaiSearchCommand extends Command {
 
                 } else {
                     Elements elements = doc.select(".caption");
-                    elements.forEach(e ->{
+                    elements.forEach(e -> {
                         String title = e.text();
                         String numbers = e.parent().attr("href");
                         String link = "https://nhentai.net" + numbers;

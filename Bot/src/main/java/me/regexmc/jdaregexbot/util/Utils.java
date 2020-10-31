@@ -16,7 +16,6 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageOutputStream;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
@@ -29,7 +28,6 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.Period;
 import java.util.*;
-import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
