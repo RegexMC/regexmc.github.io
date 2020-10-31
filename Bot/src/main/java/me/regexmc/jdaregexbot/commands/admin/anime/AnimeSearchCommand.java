@@ -405,7 +405,7 @@ public class AnimeSearchCommand extends Command {
                                             queryFormat = queryFormat.replace("%%sort%%", "FAVOURITES_DESC");
                                             sort = "Favourites";
                                         }
-                                        case "default" -> {
+                                        default -> {
                                             queryFormat = queryFormat.replace("%%sort%%", "POPULARITY_DESC");
                                         }
                                     }
@@ -438,7 +438,6 @@ public class AnimeSearchCommand extends Command {
                                     }
                                     queryFormat = queryFormat.replace("%%genrenotin%%", "[" + flagModifiers.stream().collect(Collectors.joining("\\\", \\\"", "\\\"", "\\\"")) + "]");
                                 }
-
                                 case "title" -> {
                                     byTitle = true;
                                     queryFormat = "{Page(page: 1, perPage: 25) {media(search:\\\"" + flagModifiers.get(0) + "\\\", sort:POPULARITY_DESC, type: ANIME) {title {english romaji} averageScore popularity description siteUrl}}}";
