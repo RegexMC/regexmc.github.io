@@ -1,0 +1,20 @@
+{
+  Page(page: 1, perPage: 25) {
+    media(type: ANIME,
+          genre_in: %%genrein%%,
+          genre_not_in:%%genrenotin%%,
+          tag_in: %%tagin%%,
+          tag_not_in: %%tagnotin%%,
+          sort:%%sort%% )
+    {
+      title {
+        english
+        romaji
+      }
+      averageScore
+      popularity
+      favourites
+      siteUrl
+    }
+  }
+}

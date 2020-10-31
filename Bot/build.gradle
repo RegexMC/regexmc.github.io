@@ -1,0 +1,60 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:6.0.0'
+    }
+}
+
+plugins {
+    id 'java'
+}
+
+group 'me.regexmc.jdaregexbot'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+    maven { url 'https://jitpack.io' }
+}
+
+
+apply plugin: 'com.github.johnrengelman.shadow'
+
+task runApp(type: JavaExec) {
+    main = "me.regexmc.jdaregexbot.BotMain"
+}
+
+dependencies {
+    compile 'com.jagrosh:jda-utilities:3.0.4'
+    compile 'net.dv8tion:JDA:4.2.0_168'
+    compile 'org.mozilla:rhino:1.7.11'
+    compile 'org.jsoup:jsoup:1.13.1'
+    compile 'org.apache.commons:commons-text:1.9'
+    compile 'commons-io:commons-io:2.8.0'
+    implementation 'org.yaml:snakeyaml:1.27'
+    implementation 'com.github.HypixelDev:PublicAPI:2.0.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'me.regexmc.jdaregexbot.BotMain'
+        )
+    }
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDirs "src/main/resources"
+        }
+    }
+}
