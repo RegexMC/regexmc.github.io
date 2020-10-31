@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageOutputStream;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
@@ -28,6 +29,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.Period;
 import java.util.*;
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -292,7 +294,7 @@ public class Utils {
     }
 
     public static File downloadAttachmentToFile(List<Message.Attachment> attachments, Message message) throws IOException {
-        String attachmentsPath = "C:\\Users\\regex\\Desktop\\Development\\Java\\dbot\\src\\main\\java\\me\\regexmc\\jdaregexbot\\run\\attachments\\";
+        String attachmentsPath = "C:\\Users\\regex\\Desktop\\Development\\regexmc.github.io\\Bot\\run\\attachments\\";
         File attachmentFile = new File(attachmentsPath + message.getId() + "." + attachments.get(0).getFileExtension());
         FileUtils.copyURLToFile(
                 new URL(attachments.get(0).getUrl()),
