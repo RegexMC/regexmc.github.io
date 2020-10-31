@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import org.apache.commons.text.WordUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -405,9 +406,7 @@ public class AnimeSearchCommand extends Command {
                                             queryFormat = queryFormat.replace("%%sort%%", "FAVOURITES_DESC");
                                             sort = "Favourites";
                                         }
-                                        default -> {
-                                            queryFormat = queryFormat.replace("%%sort%%", "POPULARITY_DESC");
-                                        }
+                                        default -> queryFormat = queryFormat.replace("%%sort%%", "POPULARITY_DESC");
                                     }
                                 }
                                 case "tags" -> {
@@ -440,8 +439,9 @@ public class AnimeSearchCommand extends Command {
                                 }
                                 case "title" -> {
                                     byTitle = true;
-                                    queryFormat = "{Page(page: 1, perPage: 25) {media(search:\\\"" + flagModifiers.get(0) + "\\\", sort:POPULARITY_DESC, type: ANIME) {title {english romaji} averageScore popularity description siteUrl}}}";
+                                    queryFormat = "{Page(page: 1, perPage: 5) {media(search:\\\"" + flagModifiers.get(0) + "\\\", sort:POPULARITY_DESC, type: ANIME) {title {english romaji} averageScore popularity description siteUrl}}}";
                                 }
+                                case "limit" -> queryFormat = queryFormat.replace("perPage: 5", "perPage: " + flagModifiers.get(0));
                             }
                         }
                     }
@@ -474,15 +474,13 @@ public class AnimeSearchCommand extends Command {
                     JSONObject results = new JSONObject(result);
 
                     JSONArray items = results.getJSONObject("data").getJSONObject("Page").getJSONArray("media");
-                    System.out.println(result);
 
-                    int maxCharsInDesc = 500;
-                    for (int i = 0; i < 10; i++) {
+                    int maxCharsInDesc = 800;
+                    for (int i = 0; i < 16; i++) {
                         if (byTitle) {
                             embed.setTitle("Most popular anime matching search");
 
                             int finalMaxCharsInDesc = maxCharsInDesc;
-                            System.out.println(maxCharsInDesc);
                             items.forEach(o -> {
                                 JSONObject animeObject = (JSONObject) o;
 
@@ -490,10 +488,10 @@ public class AnimeSearchCommand extends Command {
                                 int averageScore = animeObject.isNull("averageScore") ? 0 : animeObject.getInt("averageScore");
                                 int popularity = animeObject.getInt("popularity");
                                 String siteUrl = animeObject.getString("siteUrl");
-                                String description = animeObject.isNull("description") ? "" : animeObject.getString("description");
+                                String description = animeObject.isNull("description") ? "" : Jsoup.parse(animeObject.getString("description")).text();
 
                                 if (description.length() > finalMaxCharsInDesc)
-                                    description = description.substring(0, finalMaxCharsInDesc);
+                                    description = description.substring(0, finalMaxCharsInDesc-3)+"...";
 
                                 String value = "[Link](" + siteUrl + " '" + siteUrl + "')\n" +
                                         "Score: " + averageScore + "\n" +
