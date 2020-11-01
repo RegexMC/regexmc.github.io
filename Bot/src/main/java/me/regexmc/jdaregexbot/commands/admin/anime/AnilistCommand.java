@@ -50,7 +50,7 @@ public class AnilistCommand extends Command {
     @Override
     protected void execute(CommandEvent event) {
         if (Utils.isCommandChannel(event)) {
-            String[] args = Arrays.copyOfRange(event.getMessage().getContentRaw().split(" "), 1, event.getMessage().getContentRaw().split(" ").length);
+            String[] args = event.getArgs().split(" ");
 
             if (args.length < 1) {
                 event.reply("Include a username");

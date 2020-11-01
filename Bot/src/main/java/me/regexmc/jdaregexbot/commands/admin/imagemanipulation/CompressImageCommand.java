@@ -31,7 +31,7 @@ public class CompressImageCommand extends Command {
     @Override
     protected void execute(CommandEvent event) {
         if (Utils.isCommandChannel(event)) {
-            String[] args = Arrays.copyOfRange(event.getMessage().getContentRaw().split(" "), 1, event.getMessage().getContentRaw().split(" ").length);
+            String[] args = event.getArgs().split(" ");
 
             int maxFileSizeInKb = 0;
 

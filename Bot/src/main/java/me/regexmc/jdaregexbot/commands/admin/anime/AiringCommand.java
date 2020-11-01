@@ -46,7 +46,7 @@ public class AiringCommand extends Command {
             EmbedBuilder latestReleasesEmbed = new EmbedBuilder();
             latestReleasesEmbed.setTitle("Releases in past 24h");
             try {
-                String[] args = Arrays.copyOfRange(event.getMessage().getContentRaw().split(" "), 1, event.getMessage().getContentRaw().split(" ").length);
+                String[] args = event.getArgs().split(" ");
                 if (args.length > 0) {
                     String arg = args[0].replace("h", "").replace("d", "").replace("m", "");
                     isLatestReleases = arg.equalsIgnoreCase("latest");

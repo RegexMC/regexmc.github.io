@@ -27,7 +27,7 @@ public class ConvertCommand extends Command {
     @Override
     protected void execute(CommandEvent event) {
         if (Utils.isCommandChannel(event)) {
-            final String[] args = Arrays.copyOfRange(event.getMessage().getContentRaw().split(" "), 1, event.getMessage().getContentRaw().split(" ").length);
+            final String[] args = event.getArgs().split(" ");
             final var inches2 = args[2].equalsIgnoreCase("inches") || args[2].equalsIgnoreCase("\"");
             final var metres = args[1].equalsIgnoreCase("m") || args[1].equalsIgnoreCase("metres") || args[1].equalsIgnoreCase("meters");
             final var centimetres = args[1].equalsIgnoreCase("cm") || args[1].equalsIgnoreCase("centimetres") || args[1].equalsIgnoreCase("centimeters");

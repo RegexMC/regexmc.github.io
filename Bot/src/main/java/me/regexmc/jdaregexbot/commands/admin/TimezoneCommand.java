@@ -32,7 +32,7 @@ public class TimezoneCommand extends Command {
     protected void execute(CommandEvent event) {
         if (Utils.isCommandChannel(event)) {
             if (Utils.isAdmin(event)) {
-                String[] args = Arrays.copyOfRange(event.getMessage().getContentRaw().split(" "), 1, event.getMessage().getContentRaw().split(" ").length);
+                String[] args = event.getArgs().split(" ");
                 if (args.length < 1) {
                     event.reply("Invalid timezone");
                     return;

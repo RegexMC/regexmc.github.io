@@ -83,7 +83,6 @@ public class BotMain extends ListenerAdapter {
         builtClient = client.build();
 
         builder = JDABuilder.createDefault(token)
-                .setAutoReconnect(false)
                 .addEventListeners(waiter, builtClient)
                 .addEventListeners(new BotMain());
         bot = builder.build();

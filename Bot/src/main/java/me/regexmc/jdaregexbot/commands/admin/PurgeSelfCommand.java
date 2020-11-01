@@ -33,7 +33,7 @@ public class PurgeSelfCommand extends Command {
     @Override
     protected void execute(CommandEvent event) {
         if (Utils.isCommandChannel(event)) {
-            String[] args = Arrays.copyOfRange(event.getMessage().getContentRaw().split(" "), 1, event.getMessage().getContentRaw().split(" ").length);
+            String[] args = event.getArgs().split(" ");
             int amountToScan = 100;
             if (args.length > 0) {
                 if (Utils.isNumeric(args[0])) amountToScan = Utils.parseInt(args[0]);

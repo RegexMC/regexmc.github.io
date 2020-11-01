@@ -33,7 +33,7 @@ public class ClearCacheCommand extends Command {
     @Override
     protected void execute(CommandEvent event) {
         if (Utils.isCommandChannel(event)) {
-            String[] args = Arrays.copyOfRange(event.getMessage().getContentRaw().split(" "), 1, event.getMessage().getContentRaw().split(" ").length);
+            String[] args = event.getArgs().split(" ");
             if (args.length > 0) if (args[0].equalsIgnoreCase("-y")) {
                 int deleted = Cache.clearCache().size();
                 event.reply("Deleted " + deleted + " files");

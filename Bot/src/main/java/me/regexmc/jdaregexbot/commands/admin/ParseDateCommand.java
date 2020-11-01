@@ -29,7 +29,7 @@ public class ParseDateCommand extends Command {
     protected void execute(CommandEvent event) {
         if (Utils.isCommandChannel(event)) {
             if (Utils.isAdmin(event)) {
-                String[] args = Arrays.copyOfRange(event.getMessage().getContentRaw().split(" "), 1, event.getMessage().getContentRaw().split(" ").length);
+                String[] args = event.getArgs().split(" ");
                 Date date = new Date(Long.parseLong(args[0]) * 1000);
                 event.reply(date.toString());
             }
