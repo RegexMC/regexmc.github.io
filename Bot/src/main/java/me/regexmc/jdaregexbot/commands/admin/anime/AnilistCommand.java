@@ -111,7 +111,7 @@ public class AnilistCommand extends Command {
                 userEmbed.setDescription(about);
                 userEmbed.setFooter(userURL);
 
-                userEmbed.addField("Watchtime", Utils.timeConvert(animeWatchTime, "default"), false);
+                userEmbed.addField("Watch Time", Utils.timeConvert(animeWatchTime, "default"), false);
                 userEmbed.addField("Entries", entries + "", false);
                 userEmbed.addField("Favourites", favouriteCount + "", false);
                 userEmbed.addField("Recent Activity", (recentType.equals("ANIME") ? "Watched `" : "Read `") + recentRomajiTitle + " (" + recentEnglishTitle + ")` [" + progress + "]", false);
