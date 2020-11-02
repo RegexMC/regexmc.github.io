@@ -387,8 +387,7 @@ public class AnimeSearchCommand extends Command {
                         ArrayList<String> flagModifiers = new ArrayList<>(Arrays.asList(Arrays.copyOfRange(s.split(" "), 1, s.split(" ").length)));
 
                         for (int i = 0; i < flagModifiers.size(); i++) {
-                            flagModifiers.set(i, WordUtils.capitalize(flagModifiers.get(i).replaceAll(",", "").toLowerCase()));
-                            flagModifiers.set(i, WordUtils.capitalize(flagModifiers.get(i).replaceAll(" ", "").toLowerCase()));
+                            flagModifiers.set(i, WordUtils.capitalize(flagModifiers.get(i).replaceAll(",", "").replaceAll(" ", "").toLowerCase()));
                         }
 
                         if (flagModifiers.size() != 0) {
