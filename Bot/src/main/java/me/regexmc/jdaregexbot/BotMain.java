@@ -129,10 +129,11 @@ public class BotMain extends ListenerAdapter {
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         if (event.getChannel().getId().equals("768670023400423434") || event.getChannel().getId().equals("772734834865995796")) {
-            if (event.getAuthor().getId().equals(event.getJDA().getSelfUser().getId())) return;
-
+            if (event.getAuthor().getId().equals(event.getJDA().getSelfUser().getId())) return; //dont delete if message is from bot
             if(event.getChannel().getId().equals("772734834865995796")) {
+                System.out.println("Webhook channel message received");
                 if(event.isWebhookMessage()) {
+                    System.out.println("Message is a webhook");
                     bot.shutdown();
                     try {
                         Thread.sleep(5000);
