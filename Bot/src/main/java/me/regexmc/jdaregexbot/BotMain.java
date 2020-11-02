@@ -121,9 +121,14 @@ public class BotMain extends ListenerAdapter {
         commandChannels = (ArrayList<String>) config.get("channel_commands");
     }
 
+    public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
+        long diffInMillies = date2.getTime() - date1.getTime();
+        return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
+    }
+
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
-        if (event.getChannel().getId().equals("768670023400423434")) {
+        if (event.getChannel().getId().equals("768670023400423434") || event.getChannel().getId().equals("772734834865995796")) {
             if (event.getAuthor().getId().equals(event.getJDA().getSelfUser().getId())) return;
             event.getMessage().delete().queue();
             return;
@@ -160,10 +165,5 @@ public class BotMain extends ListenerAdapter {
                 }
             }
         }
-    }
-
-    public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
-        long diffInMillies = date2.getTime() - date1.getTime();
-        return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
     }
 }
