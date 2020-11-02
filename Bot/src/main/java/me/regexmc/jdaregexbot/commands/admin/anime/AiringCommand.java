@@ -3,6 +3,8 @@ package me.regexmc.jdaregexbot.commands.admin.anime;
 import com.google.gson.JsonParser;
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
+import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
+import me.regexmc.jdaregexbot.util.PageHandler;
 import me.regexmc.jdaregexbot.util.Utils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import org.json.JSONArray;
@@ -21,7 +23,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class AiringCommand extends Command {
 
-    public AiringCommand() {
+    final EventWaiter waiter;
+
+    public AiringCommand(EventWaiter waiter) {
         this.name = "airing";
         this.cooldown = 30;
         this.arguments = "[latest | next x hours]";
@@ -34,22 +38,25 @@ public class AiringCommand extends Command {
                 commandEvent.reply(this.help);
             }
         };
+        this.waiter = waiter;
     }
 
     @Override
     protected void execute(CommandEvent event) {
         if (Utils.isCommandChannel(event)) {
-            StringBuilder msg = new StringBuilder();
             boolean isLatestReleases = false;
             boolean isNextXHours = false;
             int xHours = 0;
-            EmbedBuilder latestReleasesEmbed = new EmbedBuilder();
-            latestReleasesEmbed.setTitle("Releases in past 24h");
+
+            List<EmbedBuilder> embedBuilders = new ArrayList<>();
+            embedBuilders.add(new EmbedBuilder());
+
             try {
                 String[] args = event.getArgs().split(" ");
                 if (args.length > 0) {
                     String arg = args[0].replace("h", "").replace("d", "").replace("m", "");
                     isLatestReleases = arg.equalsIgnoreCase("latest");
+                    embedBuilders.set(0, embedBuilders.get(0).setTitle(isLatestReleases ? "Releases in past 24h" : "Airing Anime"));
                     isNextXHours = Utils.isNumeric(arg);
                     if (isNextXHours)
                         xHours = Utils.parseInt(arg) > (7 * 24 * 3600) ? 604800 : Utils.parseInt(arg);
@@ -120,8 +127,8 @@ public class AiringCommand extends Command {
                     JSONObject animeMedia = entry.getValue();
                     JSONObject airingSchedule = animeMedia.getJSONObject("airingSchedule");
 
-                    String englishTitle = animeMedia.getJSONObject("title").getString("english");
-                    String romajiTitle = animeMedia.getJSONObject("title").getString("romaji");
+                    String englishTitle = animeMedia.getJSONObject("title").optString("english");
+                    String romajiTitle = animeMedia.getJSONObject("title").optString("romaji");
 
                     String nextEpisodeAiring = "";
                     int episode = 0;
@@ -139,11 +146,14 @@ public class AiringCommand extends Command {
                         }
                     }
 
+                    if (embedBuilders.get(embedBuilders.size() - 1).getFields().size() > 4)
+                        embedBuilders.add(new EmbedBuilder().setTitle(isLatestReleases ? "Releases in past 24h" : "Airing Anime"));
+
+
                     if (isLatestReleases) {
-                        latestReleasesEmbed.addField(romajiTitle + " (" + englishTitle.replace("\u203c", "!") + ")", "Episode: " + episode + " | Aired " + nextEpisodeAiring.replace("-", "") + " hours ago", false);
+                        embedBuilders.set(embedBuilders.size() - 1, embedBuilders.get(embedBuilders.size() - 1).addField(romajiTitle + " (" + englishTitle.replace("\u203c", "!") + ")", "Episode: " + episode + " | Aired " + nextEpisodeAiring.replace("-", "") + " hours ago", false));
                     } else {
-                        msg.append("__**").append(romajiTitle).append(" (").append(englishTitle.replace("\u203c", "!")).append(")**__\n");
-                        msg.append("Episode: ").append(episode).append(" | Airs At: ").append(exactDate).append(" | In: ").append(nextEpisodeAiring).append("\n");
+                        embedBuilders.set(embedBuilders.size() - 1, embedBuilders.get(embedBuilders.size() - 1).addField(romajiTitle + " (" + englishTitle.replace("\u203c", "!") + ")", "Episode: " + episode + " | Airs At: " + exactDate + " | In: " + nextEpisodeAiring, false));
                     }
                 }
             } catch (IOException e) {
@@ -151,12 +161,18 @@ public class AiringCommand extends Command {
                 e.printStackTrace();
             }
 
-            if (isLatestReleases) {
-                if (latestReleasesEmbed.getFields().size() == 0) latestReleasesEmbed.addBlankField(false);
-                event.reply(latestReleasesEmbed.build());
-            } else {
-                event.reply(msg.toString());
+            for (int i = 0; i < embedBuilders.size(); i++) {
+                if (embedBuilders.get(i).getFields().size() == 0)
+                    embedBuilders.set(i, embedBuilders.get(i).addBlankField(false));
             }
+
+            embedBuilders.set(0, embedBuilders.get(0).setFooter("Page 1 of " + embedBuilders.size()));
+
+            event.getChannel().sendMessage(embedBuilders.get(0).build()).queue(msg -> {
+                EmbedBuilder[] embeds = new EmbedBuilder[embedBuilders.size()];
+                embedBuilders.toArray(embeds);
+                PageHandler.managePages(waiter, event.getAuthor(), msg, embeds, 0, true);
+            });
         } else {
             event.reply("Not a command channel");
         }

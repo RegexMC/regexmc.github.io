@@ -70,8 +70,8 @@ public class AnimeNotification extends TimerTask {
                     JSONObject animeMedia = animeData.getJSONObject(key);
                     JSONObject airingSchedule = animeMedia.getJSONObject("airingSchedule");
 
-                    String englishTitle = animeMedia.getJSONObject("title").getString("english");
-                    String romajiTitle = animeMedia.getJSONObject("title").getString("romaji");
+                    String englishTitle = animeMedia.getJSONObject("title").optString("english");
+                    String romajiTitle = animeMedia.getJSONObject("title").optString("romaji");
 
                     JSONArray nodes = airingSchedule.getJSONArray("nodes");
 

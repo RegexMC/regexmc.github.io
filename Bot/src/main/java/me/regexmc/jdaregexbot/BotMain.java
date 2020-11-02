@@ -71,7 +71,7 @@ public class BotMain extends ListenerAdapter {
                 new CompressImageCommand(),
                 new ParseDateCommand(),
                 new PurgeSelfCommand(),
-                new AiringCommand(),
+                new AiringCommand(waiter),
                 new AnilistCommand(),
                 new AnimeSearchCommand(),
                 new HentaiSearchCommand(),
