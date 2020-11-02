@@ -110,6 +110,7 @@ public class BotMain extends ListenerAdapter {
         Utils.log("Started Notification timer loop", Utils.ErrorTypes.INFO);
     }
 
+
     @SuppressWarnings("unchecked")
     private static void loadConfig() throws IOException {
         Yaml yaml = new Yaml();
