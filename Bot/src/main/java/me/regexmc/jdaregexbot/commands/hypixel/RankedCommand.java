@@ -27,8 +27,11 @@ public class RankedCommand extends Command {
     public RankedCommand(EventWaiter waiter) {
         this.waiter = waiter;
         this.name = "ranked";
-        this.help = "Get player ranked stats";
         this.cooldown = 10;
+        this.arguments = "<ign>";
+        this.help = "Cooldown: " + this.cooldown +
+                " | Syntax: `" + this.arguments +
+                "`\nGets the Ranked stats of " + this.arguments;
     }
 
     private static MessageEmbed[] getStatsEmbed(String playerName) {

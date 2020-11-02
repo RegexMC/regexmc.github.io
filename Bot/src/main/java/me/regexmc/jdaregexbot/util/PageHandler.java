@@ -50,7 +50,7 @@ public class PageHandler {
                     return;
                 }
 
-                message.editMessage(pages[page + 1].setFooter("Page " + (page+2) + " of " + pages.length).build()).queue();
+                message.editMessage(pages[page + 1].setFooter("Page " + (page + 2) + " of " + pages.length).build()).queue();
                 managePages(waiter, allowedRespondent, message, pages, page + 1, false);
             } else if (reactMessage.getReaction().getReactionEmote().toString().equals("RE:" + Utils.Emotes.LEFT_ARROW.getUnicode())) {
                 message.removeReaction(Utils.Emotes.LEFT_ARROW.getUnicode(), allowedRespondent).queue();

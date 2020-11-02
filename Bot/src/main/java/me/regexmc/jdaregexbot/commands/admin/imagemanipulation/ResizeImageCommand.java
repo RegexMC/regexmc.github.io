@@ -5,8 +5,6 @@ import com.jagrosh.jdautilities.command.CommandEvent;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import me.regexmc.jdaregexbot.util.Utils;
 
-import java.util.Arrays;
-
 public class ResizeImageCommand extends Command {
 
     public ResizeImageCommand(EventWaiter waiter) {

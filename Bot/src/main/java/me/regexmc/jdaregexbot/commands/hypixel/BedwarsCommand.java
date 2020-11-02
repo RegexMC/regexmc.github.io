@@ -25,7 +25,12 @@ public class BedwarsCommand extends Command {
     public BedwarsCommand(EventWaiter waiter) {
         this.waiter = waiter;
         this.name = "bedwars";
-        this.help = "Get player bedwars stats";
+        this.cooldown = 10;
+        this.arguments = "<ign>";
+        this.help = "Cooldown: " + this.cooldown +
+                " | Syntax: `" + this.arguments +
+                "`\nGets the Bedwars stats of " + this.arguments;
+        this.aliases = new String[]{"bw"};
     }
 
     private static MessageEmbed[] getStatsEmbed(String playerName) {

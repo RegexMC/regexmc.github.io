@@ -23,8 +23,11 @@ public class SkywarsCommand extends Command {
     public SkywarsCommand(EventWaiter waiter) {
         this.waiter = waiter;
         this.name = "skywars";
-        this.help = "Get player skywars stats";
         this.cooldown = 10;
+        this.arguments = "<ign>";
+        this.help = "Cooldown: " + this.cooldown +
+                " | Syntax: `" + this.arguments +
+                "`\nGets the Skywars stats of " + this.arguments;
     }
 
     private static MessageEmbed[] getStatsEmbeds(String playerName) {

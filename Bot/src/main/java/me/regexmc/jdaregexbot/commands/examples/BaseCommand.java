@@ -4,8 +4,6 @@ import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 import me.regexmc.jdaregexbot.util.Utils;
 
-import java.util.Arrays;
-
 public class BaseCommand extends Command {
 
     public BaseCommand() {
@@ -17,7 +15,7 @@ public class BaseCommand extends Command {
     protected void execute(CommandEvent event) {
         if (Utils.isCommandChannel(event)) {
             String[] args = event.getArgs().split(" ");
-            System.out.println("test");
+
         }
     }
 }

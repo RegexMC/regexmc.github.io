@@ -16,7 +16,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 
 public class AnilistCommand extends Command {
 
@@ -57,9 +56,7 @@ public class AnilistCommand extends Command {
                 return;
             }
             try {
-                String json = ("{\"query\":\"" + Utils.loadResourceAsString("anilist_userquery")
-                        //Utils.readFile("C:\\Users\\regex\\Desktop\\Development\\Java\\dbot\\src\\main\\java\\me\\regexmc\\jdaregexbot\\run\\anilist_userquery")
-                        + "\"}").replace("%%name%%", args[0] + "").replaceAll(System.getProperty("line.separator"), " ");
+                String json = ("{\"query\":\"" + Utils.loadResourceAsString("anilist_userquery") + "\"}").replace("%%name%%", args[0] + "").replaceAll(System.getProperty("line.separator"), " ");
                 URL url = new URL("https://graphql.anilist.co");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setConnectTimeout(5000);
@@ -77,7 +74,10 @@ public class AnilistCommand extends Command {
                 String result = org.apache.commons.io.IOUtils.toString(in, StandardCharsets.UTF_8);
 
                 JSONObject userData = new JSONObject(result).getJSONObject("data");
-                JSONObject user = userData.getJSONObject("User");
+                JSONObject page = userData.getJSONObject("Page");
+                JSONArray mediaList = page.getJSONArray("mediaList");
+
+                JSONObject user = mediaList.getJSONObject(0).getJSONObject("user");
                 JSONObject statistics = user.getJSONObject("statistics");
                 JSONObject favourites = user.getJSONObject("favourites").getJSONObject("anime");
 
@@ -88,6 +88,13 @@ public class AnilistCommand extends Command {
                 String userURL = user.getString("siteUrl");
                 String userColor = user.getJSONObject("options").getString("profileColor");
 
+                JSONObject recentActivity = mediaList.getJSONObject(0);
+                JSONObject recentMedia = recentActivity.getJSONObject("media");
+                String recentType = recentMedia.getString("type");
+                String recentEnglishTitle = recentMedia.getJSONObject("title").optString("english");
+                String recentRomajiTitle = recentMedia.getJSONObject("title").optString("romaji");
+                int progress = recentActivity.optInt("progress");
+
                 long animeWatchTime = statistics.getJSONObject("anime").getLong("minutesWatched");
                 int entries = statistics.getJSONObject("anime").getInt("count");
 
@@ -95,7 +102,7 @@ public class AnilistCommand extends Command {
                 int favouriteCount = nodes.length();
 
                 EmbedBuilder userEmbed = new EmbedBuilder();
-                userEmbed.setTitle(name);
+                userEmbed.setTitle(name, userURL);
                 userEmbed.setColor(getColorFromString(userColor));
                 if (bannerURL.endsWith(".png") || bannerURL.endsWith(".jpg") || bannerURL.endsWith("jpeg"))
                     userEmbed.setImage(bannerURL);
@@ -107,6 +114,7 @@ public class AnilistCommand extends Command {
                 userEmbed.addField("Watchtime", Utils.timeConvert(animeWatchTime, "default"), false);
                 userEmbed.addField("Entries", entries + "", false);
                 userEmbed.addField("Favourites", favouriteCount + "", false);
+                userEmbed.addField("Recent Activity", (recentType.equals("ANIME") ? "Watched `" : "Read `") + recentRomajiTitle + " (" + recentEnglishTitle + ")` [" + progress + "]", false);
 
                 event.reply(userEmbed.build());
 
@@ -118,6 +126,5 @@ public class AnilistCommand extends Command {
                 event.reply("Something went wrong. (Invalid User?)");
             }
         }
-
     }
 }

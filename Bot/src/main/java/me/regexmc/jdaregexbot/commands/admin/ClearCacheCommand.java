@@ -8,7 +8,6 @@ import me.regexmc.jdaregexbot.util.Cache;
 import me.regexmc.jdaregexbot.util.Utils;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 public class ClearCacheCommand extends Command {

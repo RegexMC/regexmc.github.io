@@ -5,8 +5,6 @@ import com.jagrosh.jdautilities.command.CommandEvent;
 import me.regexmc.jdaregexbot.util.Utils;
 import org.json.JSONObject;
 
-import java.util.Arrays;
-
 public class ConvertCommand extends Command {
 
     public ConvertCommand() {

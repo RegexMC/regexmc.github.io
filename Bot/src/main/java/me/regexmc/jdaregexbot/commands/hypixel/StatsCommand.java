@@ -21,8 +21,11 @@ public class StatsCommand extends Command {
     public StatsCommand(EventWaiter waiter) {
         this.waiter = waiter;
         this.name = "stats";
-        this.help = "Get player stats";
         this.cooldown = 10;
+        this.arguments = "<ign>";
+        this.help = "Cooldown: " + this.cooldown +
+                " | Syntax: `" + this.arguments +
+                "`\nGets the general Hypixel stats of " + this.arguments;
     }
 
     private static MessageEmbed getStatsEmbed(String playerName) {

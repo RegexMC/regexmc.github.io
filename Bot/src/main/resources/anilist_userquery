@@ -1,31 +1,43 @@
 {
-  User(name: \"%%name%%\") {
-    name
-    about
-    avatar {
-      large
-      medium
-    }
-    bannerImage
-    siteUrl
-    statistics {
-      anime {
-        minutesWatched
-        count
-      }
-    }
-    favourites {
-      anime {
-        nodes {
-          title {
-            romaji
-            english
+  Page(page: 1, perPage: 1) {
+    mediaList(userName: \"%%name%%\", sort: UPDATED_TIME_DESC) {
+      user {
+        name
+        about
+        avatar {
+          large
+          medium
+        }
+        bannerImage
+        siteUrl
+        statistics {
+          anime {
+            minutesWatched
+            count
           }
         }
+        favourites {
+          anime {
+            nodes {
+              title {
+                romaji
+                english
+              }
+            }
+          }
+        }
+        options {
+          profileColor
+        }
       }
-    }
-    options{
-      profileColor
+      media {
+        title {
+          english
+          romaji
+        }
+        type
+      }
+      progress
     }
   }
 }

@@ -4,7 +4,6 @@ import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 import me.regexmc.jdaregexbot.util.Utils;
 
-import java.util.Arrays;
 import java.util.Date;
 
 public class ParseDateCommand extends Command {
