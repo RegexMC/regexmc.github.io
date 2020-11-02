@@ -13,4 +13,5 @@ Bot/run.zip
 Bot/src.zip
 Bot/settings.gradle
 Bot/RegexBot.jar
+Bot/build.bat
 *.bat
