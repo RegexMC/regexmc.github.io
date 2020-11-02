@@ -38,6 +38,8 @@ public class BotMain extends ListenerAdapter {
     public static ArrayList<String> admins = new ArrayList<>();
     public static ArrayList<String> commandChannels = new ArrayList<>();
     public static String logFile;
+
+    private static Timer timer;
     private static Boolean devEnv = false;
     private static String api_key;
     private static String token;
@@ -95,7 +97,7 @@ public class BotMain extends ListenerAdapter {
         Utils.log("Set Hypixel API", Utils.ErrorTypes.INFO);
 
         Utils.log("Starting Notification timer loop", Utils.ErrorTypes.INFO);
-        Timer timer = new Timer();
+        timer = new Timer();
 
         //Get the next hour quarter and start loop from then
         Date now = new Date();
@@ -107,9 +109,9 @@ public class BotMain extends ListenerAdapter {
         long minutes = dateDiff < 0 ? 15 + dateDiff : dateDiff;
 
         timer.schedule(new AnimeNotification(), minutes * 60 * 1000, 30 * 60 * 1000);
+
         Utils.log("Started Notification timer loop", Utils.ErrorTypes.INFO);
     }
-
 
     @SuppressWarnings("unchecked")
     private static void loadConfig() throws IOException {
@@ -132,9 +134,8 @@ public class BotMain extends ListenerAdapter {
         if (event.getChannel().getId().equals("768670023400423434") || event.getChannel().getId().equals("772734834865995796")) {
             if (event.getAuthor().getId().equals(event.getJDA().getSelfUser().getId())) return; //dont delete if message is from bot
             if(event.getChannel().getId().equals("772734834865995796")) {
-                System.out.println("Webhook channel message received");
                 if(event.isWebhookMessage()) {
-                    System.out.println("Message is a webhook");
+                    timer.cancel();
                     bot.shutdown();
                     try {
                         Thread.sleep(5000);
