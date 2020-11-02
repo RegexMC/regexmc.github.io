@@ -33,21 +33,20 @@ public class HentaiSearchCommand extends Command {
         };
     }
 
-
     @Override
     protected void execute(CommandEvent event) {
         if (Utils.isCommandChannel(event)) {
             boolean isId = false;
+
+            String query;
             String id = "";
+            String sort = "Recent";
+
             EmbedBuilder embed = new EmbedBuilder();
 
             ArrayList<String> flags = new ArrayList<>(Arrays.asList(Arrays.copyOfRange(event.getMessage().getContentRaw().split("--"), 1, event.getMessage().getContentRaw().split("--").length)));
-
             AtomicReference<String> tagQuery = new AtomicReference<>("");
             AtomicReference<String> sortQuery = new AtomicReference<>("");
-
-            String query;
-            String sort = "Recent";
 
             for (String s : flags) {
                 String flagName = s.split(" ")[0];
@@ -71,12 +70,8 @@ public class HentaiSearchCommand extends Command {
                                 }
                             }
                         }
-                        case "tags" -> {
-                            flagModifiers.forEach(f -> tagQuery.set(tagQuery.get() + "+" + (f.contains("_") ? "\"" + f.replace("_", " ") + "\"" : f)));
-                        }
-                        case "exclude_tags" -> {
-                            flagModifiers.forEach(f -> tagQuery.set(tagQuery.get() + "-" + (f.contains("_") ? "\"" + f.replace("_", " ") + "\"" : f)));
-                        }
+                        case "tags" -> flagModifiers.forEach(f -> tagQuery.set(tagQuery.get() + "+" + (f.contains("_") ? "\"" + f.replace("_", " ") + "\"" : f)));
+                        case "exclude_tags" -> flagModifiers.forEach(f -> tagQuery.set(tagQuery.get() + "-" + (f.contains("_") ? "\"" + f.replace("_", " ") + "\"" : f)));
                         case "id" -> {
                             isId = true;
                             id = Utils.isNumeric(flagModifiers.get(0)) ? flagModifiers.get(0) : null;

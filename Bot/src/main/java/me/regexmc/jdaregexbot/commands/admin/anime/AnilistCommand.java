@@ -73,6 +73,9 @@ public class AnilistCommand extends Command {
                 InputStream in = new BufferedInputStream(conn.getInputStream());
                 String result = org.apache.commons.io.IOUtils.toString(in, StandardCharsets.UTF_8);
 
+                in.close();
+                conn.disconnect();
+
                 JSONObject userData = new JSONObject(result).getJSONObject("data");
                 JSONObject page = userData.getJSONObject("Page");
                 JSONArray mediaList = page.getJSONArray("mediaList");
@@ -117,9 +120,6 @@ public class AnilistCommand extends Command {
                 userEmbed.addField("Recent Activity", (recentType.equals("ANIME") ? "Watched `" : "Read `") + recentRomajiTitle + " (" + recentEnglishTitle + ")` [" + progress + "]", false);
 
                 event.reply(userEmbed.build());
-
-                in.close();
-                conn.disconnect();
             } catch (IOException | JSONException | IllegalArgumentException e) {
                 Utils.log(e, Utils.ErrorTypes.ERROR);
                 e.printStackTrace();

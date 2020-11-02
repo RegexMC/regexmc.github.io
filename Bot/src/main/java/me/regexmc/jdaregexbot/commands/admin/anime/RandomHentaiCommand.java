@@ -33,11 +33,9 @@ public class RandomHentaiCommand extends Command {
     protected void execute(CommandEvent event) {
         if (Utils.isCommandChannel(event)) {
             int randomNum = ThreadLocalRandom.current().nextInt(1, 328000 + 1);
-
             String url = "https://nhentai.net/g/" + randomNum;
 
             EmbedBuilder embed = new EmbedBuilder();
-
             AtomicReference<String> pages = new AtomicReference<>("");
 
             try {
