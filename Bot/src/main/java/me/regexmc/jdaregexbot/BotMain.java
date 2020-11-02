@@ -130,6 +130,21 @@ public class BotMain extends ListenerAdapter {
     public void onMessageReceived(MessageReceivedEvent event) {
         if (event.getChannel().getId().equals("768670023400423434") || event.getChannel().getId().equals("772734834865995796")) {
             if (event.getAuthor().getId().equals(event.getJDA().getSelfUser().getId())) return;
+
+            if(event.getChannel().getId().equals("772734834865995796")) {
+                if(event.isWebhookMessage()) {
+                    bot.shutdown();
+                    try {
+                        Thread.sleep(5000);
+                        Runtime.
+                                getRuntime().
+                                exec("cmd /c start \"\" C:\\Users\\Regex\\REGEXBOTGIT\\regexmc.github.io\\Bot\\restart.bat");
+                    } catch (InterruptedException | IOException e) {
+                        e.printStackTrace();
+                    }
+                    System.exit(0);
+                }
+            }
             event.getMessage().delete().queue();
             return;
         }

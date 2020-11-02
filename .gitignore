@@ -12,5 +12,5 @@ Bot/gradlew.bat
 Bot/run.zip
 Bot/src.zip
 Bot/settings.gradle
-Bot/start.bat
 Bot/RegexBot.jar
+*.bat

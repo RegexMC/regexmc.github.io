@@ -292,7 +292,7 @@ public class Utils {
     }
 
     public static File downloadAttachmentToFile(List<Message.Attachment> attachments, Message message) throws IOException {
-        String attachmentsPath = "C:\\Users\\regex\\Desktop\\Development\\regexmc.github.io\\Bot\\run\\attachments\\";
+        String attachmentsPath = (String) BotMain.config.get("path_attachments");
         File attachmentFile = new File(attachmentsPath + message.getId() + "." + attachments.get(0).getFileExtension());
         FileUtils.copyURLToFile(
                 new URL(attachments.get(0).getUrl()),
