@@ -112,7 +112,7 @@ public class BotMain extends ListenerAdapter {
         long minutes = dateDiff < 0 ? 15 + dateDiff : dateDiff;
 
         timer.schedule(new AnimeNotification(), minutes * 60 * 1000, 30 * 60 * 1000);
-        timer.schedule(new AutoRestart(), 0, 43200 * 1000); //auto restart every 12h
+        timer.schedule(new AutoRestart(), 43200 * 1000, 43200 * 1000); //auto restart every 12h
         Utils.log("Started Notification timer loop", Utils.ErrorTypes.INFO);
     }
 
