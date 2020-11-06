@@ -56,7 +56,12 @@ public class AnilistCommand extends Command {
                 return;
             }
             try {
-                String json = ("{\"query\":\"" + Utils.loadResourceAsString("anilist_userquery") + "\"}").replace("%%name%%", args[0] + "").replaceAll(System.getProperty("line.separator"), " ");
+                String json = ("{\"query\":\"" + Utils.loadResourceAsString("anilist_userquery") + "\"}")
+                        .replace("%%name%%", args[0] + "")
+                        .replace("%%page%%", "1")
+                        .replace("%%status%%", "CURRENT")
+                        .replaceAll(System.getProperty("line.separator"), " ");
+
                 URL url = new URL("https://graphql.anilist.co");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setConnectTimeout(5000);
@@ -77,10 +82,10 @@ public class AnilistCommand extends Command {
                 conn.disconnect();
 
                 JSONObject userData = new JSONObject(result).getJSONObject("data");
-                JSONObject page = userData.getJSONObject("Page");
+                JSONObject page = userData.getJSONObject("a");
                 JSONArray mediaList = page.getJSONArray("mediaList");
 
-                JSONObject user = mediaList.getJSONObject(0).getJSONObject("user");
+                JSONObject user = userData.getJSONObject("User");
                 JSONObject statistics = user.getJSONObject("statistics");
                 JSONObject favourites = user.getJSONObject("favourites").getJSONObject("anime");
 

@@ -77,7 +77,8 @@ public class BotMain extends ListenerAdapter {
                 new AnilistCommand(),
                 new AnimeSearchCommand(),
                 new HentaiSearchCommand(),
-                new RandomHentaiCommand()
+                new RandomHentaiCommand(),
+                new WatchlistCommand(waiter)
         );
 
         Utils.log("Loaded commands", Utils.ErrorTypes.INFO);

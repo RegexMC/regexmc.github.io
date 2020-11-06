@@ -1,35 +1,6 @@
 {
-  Page(page: 1, perPage: 1) {
+  a: Page(page: 1, perPage: 3) {
     mediaList(userName: \"%%name%%\", sort: UPDATED_TIME_DESC) {
-      user {
-        name
-        about
-        avatar {
-          large
-          medium
-        }
-        bannerImage
-        siteUrl
-        statistics {
-          anime {
-            minutesWatched
-            count
-          }
-        }
-        favourites {
-          anime {
-            nodes {
-              title {
-                romaji
-                english
-              }
-            }
-          }
-        }
-        options {
-          profileColor
-        }
-      }
       media {
         title {
           english
@@ -38,6 +9,53 @@
         type
       }
       progress
+    }
+  }
+  b: Page(page: %%page%%, perPage: 50) {
+    mediaList(userName: \"%%name%%\", status: %%status%%) {
+            media {
+              title {
+                english
+                romaji
+              }
+              type
+              averageScore
+              genres
+              siteUrl
+            }
+      progress
+    }
+    pageInfo {
+      hasNextPage
+    }
+  }
+  User(name: \"%%name%%\") {
+    name
+    about
+    avatar {
+      large
+      medium
+    }
+    bannerImage
+    siteUrl
+    statistics {
+      anime {
+        minutesWatched
+        count
+      }
+    }
+    favourites {
+      anime {
+        nodes {
+          title {
+            romaji
+            english
+          }
+        }
+      }
+    }
+    options {
+      profileColor
     }
   }
 }
