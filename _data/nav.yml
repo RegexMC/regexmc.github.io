@@ -1,6 +1,8 @@
 list:
   - title: Home
     url: ""
+  - title: Commands
+    url: "commands"
   - title: About
     url: "about"
   - title: Extra Links
