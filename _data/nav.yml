@@ -1,0 +1,7 @@
+list:
+  - title: Home
+    url: ""
+  - title: About
+    url: "about"
+  - title: Extra Links
+    url: "other"
