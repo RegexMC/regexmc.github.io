@@ -14,6 +14,8 @@ import me.regexmc.jdaregexbot.commands.hypixel.SkywarsCommand;
 import me.regexmc.jdaregexbot.commands.hypixel.StatsCommand;
 import me.regexmc.jdaregexbot.util.APIUtil;
 import me.regexmc.jdaregexbot.util.Utils;
+import me.regexmc.scheduled.AnimeNotification;
+import me.regexmc.scheduled.AutoRestart;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -110,7 +112,7 @@ public class BotMain extends ListenerAdapter {
         long minutes = dateDiff < 0 ? 15 + dateDiff : dateDiff;
 
         timer.schedule(new AnimeNotification(), minutes * 60 * 1000, 30 * 60 * 1000);
-
+        timer.schedule(new AutoRestart(), 0, 43200 * 1000); //auto restart every 12h
         Utils.log("Started Notification timer loop", Utils.ErrorTypes.INFO);
     }
 
@@ -130,23 +132,28 @@ public class BotMain extends ListenerAdapter {
         return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
     }
 
+    public static void restartBot() {
+        timer.cancel();
+        bot.shutdown();
+        try {
+            Thread.sleep(5000);
+            Runtime.
+                    getRuntime().
+                    exec("cmd /c start \"\" C:\\Users\\Regex\\REGEXBOTGIT\\regexmc.github.io\\Bot\\restart.bat");
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+        }
+        System.exit(0);
+    }
+
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         if (event.getChannel().getId().equals("768670023400423434") || event.getChannel().getId().equals("772734834865995796")) {
-            if (event.getAuthor().getId().equals(event.getJDA().getSelfUser().getId())) return; //dont delete if message is from bot
-            if(event.getChannel().getId().equals("772734834865995796")) {
-                if(event.isWebhookMessage()) {
-                    timer.cancel();
-                    bot.shutdown();
-                    try {
-                        Thread.sleep(5000);
-                        Runtime.
-                                getRuntime().
-                                exec("cmd /c start \"\" C:\\Users\\Regex\\REGEXBOTGIT\\regexmc.github.io\\Bot\\restart.bat");
-                    } catch (InterruptedException | IOException e) {
-                        e.printStackTrace();
-                    }
-                    System.exit(0);
+            if (event.getAuthor().getId().equals(event.getJDA().getSelfUser().getId()))
+                return; //dont delete if message is from bot
+            if (event.getChannel().getId().equals("772734834865995796")) {
+                if (event.isWebhookMessage()) {
+                    restartBot();
                 }
             }
             event.getMessage().delete().queue();
