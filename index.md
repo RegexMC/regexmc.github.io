@@ -1,5 +1,5 @@
-## Commands
+## Home
 
-[https://github.com/regexmc/regexmc.github.io/](Source)
+[Source](https://github.com/regexmc/regexmc.github.io/)
 
-Developed by [https://twitter.com/regexmc](@RegexMC) | Regex#1028
+Developed by [@RegexMC](https://twitter.com/regexmc) | Regex#1028
