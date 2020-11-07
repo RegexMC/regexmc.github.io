@@ -20,6 +20,7 @@
 | animesearch | \[help\] | Searches anime based on genres and tags (refer to help) |
 | hentaisearch | \[help\] | Searches nhentai based on tags (refer to help) |
 | randomhentai |  | Gets a random doujinshi from nhentai |
+| watchlist | \<username\> \<status\> | Gets the anime list of \<username\> (refer to help) |
 | **Image Manipulation** |
 | compressimage | \<attachment\> | Compresses the attachment image |
 | **Time** |
