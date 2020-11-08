@@ -7,3 +7,5 @@ list:
     url: "about"
   - title: Extra Links
     url: "other"
+  - title: Pollefeys Live Stats
+    url: "livestats/livestats"

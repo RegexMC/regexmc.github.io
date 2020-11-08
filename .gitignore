@@ -15,3 +15,8 @@ Bot/settings.gradle
 Bot/RegexBot.jar
 Bot/build.bat
 *.bat
+.git/*
+.jekyll-cache/*
+_site/*
+Gemfile
+Gemfile.lock

@@ -1,0 +1,53 @@
+body {
+    text-align: center;
+}
+h1 {
+    margin-bottom: 100px;
+}
+h1, h2 {
+    font-weight: normal;
+}
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+li {
+    margin-bottom: 10px;
+}
+#socked {
+    color: #f33d3d;
+}
+#discord {
+    color: #6f85d2;
+}
+#twitter {
+    color: #1da1f2;
+}
+#github {
+    color: #24292e;
+}
+#hypixel {
+    color: #e2bb60;
+}
+#twitch {
+    color: #9147ff;
+}
+#livestats {
+    color: #24292e;
+}
+#soramana {
+    color: #3d8eb9;
+}
+
+img {
+    vertical-align: middle;
+}
+#hypixelImg {
+    height: 30px;
+}
+
+nav, section#projects {
+    float: left;
+    width: 50%;
+}
