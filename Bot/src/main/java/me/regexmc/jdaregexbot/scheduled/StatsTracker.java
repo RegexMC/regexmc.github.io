@@ -47,14 +47,13 @@ public class StatsTracker extends TimerTask {
                     TrackerPlayerObject oldPlayerObject = BotMain.oldTrackerPlayerObjectHashMap.get(key);
 
                     if (oldPlayerObject.getStatus().equals("Offline") && newPlayerObject.getStatus().equals("Online")) {
-                        BotMain.oldTrackerPlayerObjectHashMap.replace(key, newPlayerObject);
                         //player logged on
 
+                        BotMain.oldTrackerPlayerObjectHashMap.replace(key, newPlayerObject);
                         connectEmbed.setTitle(newPlayerObject.getUsername() + " connected");
                         connectEmbed.addField("Started tracking stats", Utils.parseDate(new Date()), true);
                         connectEmbed.setColor(RankUtils.Ranks.VIP.getColor());
                         Objects.requireNonNull(BotMain.bot.getTextChannelById(channelToSendTo)).sendMessage(connectEmbed.build()).queue();
-
                     } else if (oldPlayerObject.getStatus().equals("Online") && newPlayerObject.getStatus().equals("Offline")) {
                         //player logged off
 
@@ -78,36 +77,36 @@ public class StatsTracker extends TimerTask {
                         EmbedBuilder bedwarsStatsEmbed = new EmbedBuilder();
 
                         //region Overall Duels
-                        int oldWins = oldDuelsObject.optInt("wins");
-                        int oldLosses = oldDuelsObject.optInt("losses");
-                        double oldWL = Utils.round(oldWins / (double) oldLosses, 3);
-                        int wins = duelsObject.optInt("wins");
-                        int losses = duelsObject.optInt("losses");
-                        double WL = Utils.round(wins / (double) losses, 3);
+                        int duelsOldWins = oldDuelsObject.optInt("wins");
+                        int duelsOldLosses = oldDuelsObject.optInt("losses");
+                        double duelsOldWL = Utils.round(duelsOldWins / (double) duelsOldLosses, 3);
+                        int duelsWins = duelsObject.optInt("wins");
+                        int duelsLosses = duelsObject.optInt("losses");
+                        double duelsWL = Utils.round(duelsWins / (double) duelsLosses, 3);
 
-                        int oldKills = oldDuelsObject.optInt("kills");
-                        int oldDeaths = oldDuelsObject.optInt("deaths");
-                        double oldKD = Utils.round(oldKills / (double) oldDeaths, 3);
-                        int kills = oldDuelsObject.optInt("kills");
-                        int deaths = oldDuelsObject.optInt("deaths");
-                        double KD = Utils.round(kills / (double) deaths, 3);
+                        int duelsOldKills = oldDuelsObject.optInt("kills");
+                        int duelsOldDeaths = oldDuelsObject.optInt("deaths");
+                        double duelsOldKD = Utils.round(duelsOldKills / (double) duelsOldDeaths, 3);
+                        int duelsKills = oldDuelsObject.optInt("kills");
+                        int duelsDeaths = oldDuelsObject.optInt("deaths");
+                        double duelsKD = Utils.round(duelsKills / (double) duelsDeaths, 3);
 
-                        int winsDifference = wins - oldWins;
-                        int lossesDifference = losses - oldLosses;
-                        double WLDifference = Utils.round(WL - oldWL, 3);
-                        int killsDifference = kills - oldKills;
-                        int deathsDifference = deaths - oldDeaths;
-                        double KDDifference = Utils.round(KD - oldKD, 3);
+                        int duelsWinsDifference = duelsWins - duelsOldWins;
+                        int duelsLossesDifference = duelsLosses - duelsOldLosses;
+                        double duelsWLDifference = Utils.round(duelsWL - duelsOldWL, 3);
+                        int duelsKillsDifference = duelsKills - duelsOldKills;
+                        int duelsDeathsDifference = duelsDeaths - duelsOldDeaths;
+                        double duelsKDDifference = Utils.round(duelsKD - duelsOldKD, 3);
 
                         StringBuilder changesFieldValue = new StringBuilder().append("`");
-                        boolean showChangesField = winsDifference != 0 || lossesDifference != 0 || WLDifference != 0.0 || killsDifference != 0 || deathsDifference != 0 || KDDifference != 0;
+                        boolean showChangesField = duelsWinsDifference != 0 || duelsLossesDifference != 0 || duelsWLDifference != 0.0 || duelsKillsDifference != 0 || duelsDeathsDifference != 0 || duelsKDDifference != 0;
 
-                        changesFieldValue.append("\u2022Wins: ").append(wins).append(" (").append(winsDifference > 0 ? "+" + winsDifference : winsDifference).append(")\n");
-                        changesFieldValue.append("\u2022Losses: ").append(losses).append(" (").append(lossesDifference > 0 ? "+" + lossesDifference : lossesDifference).append(")\n");
-                        changesFieldValue.append("\u2022W/L: ").append(WL).append(" (").append(WLDifference > 0 ? "+" + WLDifference : WLDifference).append(")\n");
-                        changesFieldValue.append("\u2022Kills: ").append(kills).append(" (").append(killsDifference > 0 ? "+" + killsDifference : killsDifference).append(")\n");
-                        changesFieldValue.append("\u2022Deaths: ").append(deaths).append(" (").append(deathsDifference > 0 ? "+" + deathsDifference : deathsDifference).append(")\n");
-                        changesFieldValue.append("\u2022K/D: ").append(KD).append(" (").append(KDDifference > 0 ? "+" + KDDifference : KDDifference).append(")\n");
+                        changesFieldValue.append("\u2022Wins: ").append(duelsWins).append(" (").append(duelsWinsDifference > 0 ? "+" + duelsWinsDifference : duelsWinsDifference).append(")\n");
+                        changesFieldValue.append("\u2022Losses: ").append(duelsLosses).append(" (").append(duelsLossesDifference > 0 ? "+" + duelsLossesDifference : duelsLossesDifference).append(")\n");
+                        changesFieldValue.append("\u2022W/L: ").append(duelsWL).append(" (").append(duelsWLDifference > 0 ? "+" + duelsWLDifference : duelsWLDifference).append(")\n");
+                        changesFieldValue.append("\u2022Kills: ").append(duelsKills).append(" (").append(duelsKillsDifference > 0 ? "+" + duelsKillsDifference : duelsKillsDifference).append(")\n");
+                        changesFieldValue.append("\u2022Deaths: ").append(duelsDeaths).append(" (").append(duelsDeathsDifference > 0 ? "+" + duelsDeathsDifference : duelsDeathsDifference).append(")\n");
+                        changesFieldValue.append("\u2022K/D: ").append(duelsKD).append(" (").append(duelsKDDifference > 0 ? "+" + duelsKDDifference : duelsKDDifference).append(")\n");
 
                         changesFieldValue.append("`");
 
@@ -118,35 +117,35 @@ public class StatsTracker extends TimerTask {
                         //region Skywars Duels
                         changesFieldValue = new StringBuilder().append("`");
 
-                        int skywarsOldWins = oldDuelsObject.optInt("sw_duel_wins");
-                        int skywarsOldLosses = oldDuelsObject.optInt("sw_duel_losses");
-                        double skywarsOldWL = Utils.round(skywarsOldWins / (double) skywarsOldLosses, 3);
-                        int skywarsOldKills = oldDuelsObject.optInt("sw_duel_kills");
-                        int skywarsOldDeaths = oldDuelsObject.optInt("sw_duel_deaths");
-                        double skywarsOldKD = Utils.round(skywarsOldKills / (double) skywarsOldDeaths, 3);
+                        int duelsSkywarsOldWins = oldDuelsObject.optInt("sw_duel_wins");
+                        int duelsSkywarsOldLosses = oldDuelsObject.optInt("sw_duel_losses");
+                        double duelsSkywarsOldWL = Utils.round(duelsSkywarsOldWins / (double) duelsSkywarsOldLosses, 3);
+                        int duelsSkywarsOldKills = oldDuelsObject.optInt("sw_duel_kills");
+                        int duelsSkywarsOldDeaths = oldDuelsObject.optInt("sw_duel_deaths");
+                        double duelsSkywarsOldKD = Utils.round(duelsSkywarsOldKills / (double) duelsSkywarsOldDeaths, 3);
 
-                        int skywarsWins = duelsObject.optInt("sw_duel_wins");
-                        int skywarsLosses = duelsObject.optInt("sw_duel_losses");
-                        double skywarsWL = Utils.round(skywarsWins / (double) skywarsLosses, 3);
-                        int skywarsKills = duelsObject.optInt("sw_duel_kills");
-                        int skywarsDeaths = duelsObject.optInt("sw_duel_deaths");
-                        double skywarsKD = Utils.round(skywarsKills / (double) skywarsDeaths, 3);
+                        int duelsSkywarsWins = duelsObject.optInt("sw_duel_wins");
+                        int duelsSkywarsLosses = duelsObject.optInt("sw_duel_losses");
+                        double duelsSkywarsWL = Utils.round(duelsSkywarsWins / (double) duelsSkywarsLosses, 3);
+                        int duelsSkywarsKills = duelsObject.optInt("sw_duel_kills");
+                        int duelsSkywarsDeaths = duelsObject.optInt("sw_duel_deaths");
+                        double duelsSkywarsKD = Utils.round(duelsSkywarsKills / (double) duelsSkywarsDeaths, 3);
 
-                        int skywarsWinsDifference = skywarsWins - skywarsOldWins;
-                        int skywarsLossesDifference = skywarsLosses - skywarsOldLosses;
-                        double skywarsWLDifference = Utils.round(skywarsWL - skywarsOldWL, 3);
-                        int skywarsKillsDifference = skywarsKills - skywarsOldKills;
-                        int skywarsDeathsDifference = skywarsDeaths - skywarsOldDeaths;
-                        double skywarsKDDifference = Utils.round(skywarsKD - skywarsOldKD, 3);
+                        int duelsSkywarsWinsDifference = duelsSkywarsWins - duelsSkywarsOldWins;
+                        int duelsSkywarsLossesDifference = duelsSkywarsLosses - duelsSkywarsOldLosses;
+                        double duelsSkywarsWLDifference = Utils.round(duelsSkywarsWL - duelsSkywarsOldWL, 3);
+                        int duelsSkywarsKillsDifference = duelsSkywarsKills - duelsSkywarsOldKills;
+                        int duelsSkywarsDeathsDifference = duelsSkywarsDeaths - duelsSkywarsOldDeaths;
+                        double duelsSkywarsKDDifference = Utils.round(duelsSkywarsKD - duelsSkywarsOldKD, 3);
 
-                        showChangesField = skywarsWinsDifference != 0 || skywarsLossesDifference != 0 || skywarsWLDifference != 0.0 || skywarsKillsDifference != 0 || skywarsDeathsDifference != 0 || skywarsKDDifference != 0;
+                        showChangesField = duelsSkywarsWinsDifference != 0 || duelsSkywarsLossesDifference != 0 || duelsSkywarsWLDifference != 0.0 || duelsSkywarsKillsDifference != 0 || duelsSkywarsDeathsDifference != 0 || duelsSkywarsKDDifference != 0;
 
-                        changesFieldValue.append("\u2022Wins: ").append(skywarsWins).append(" (").append(skywarsWinsDifference > 0 ? "+" + skywarsWinsDifference : skywarsWinsDifference).append(")\n");
-                        changesFieldValue.append("\u2022Losses: ").append(skywarsLosses).append(" (").append(skywarsLossesDifference > 0 ? "+" + skywarsLossesDifference : skywarsLossesDifference).append(")\n");
-                        changesFieldValue.append("\u2022W/L: ").append(skywarsWL).append(" (").append(skywarsWLDifference > 0 ? "+" + skywarsWLDifference : skywarsWLDifference).append(")\n");
-                        changesFieldValue.append("\u2022Kills: ").append(skywarsKills).append(" (").append(skywarsKillsDifference > 0 ? "+" + skywarsKillsDifference : skywarsKillsDifference).append(")\n");
-                        changesFieldValue.append("\u2022Deaths: ").append(skywarsDeaths).append(" (").append(skywarsDeathsDifference > 0 ? "+" + skywarsDeathsDifference : skywarsDeathsDifference).append(")\n");
-                        changesFieldValue.append("\u2022K/D: ").append(skywarsKD).append(" (").append(skywarsKDDifference > 0 ? "+" + skywarsKDDifference : skywarsKDDifference).append(")\n");
+                        changesFieldValue.append("\u2022Wins: ").append(duelsSkywarsWins).append(" (").append(duelsSkywarsWinsDifference > 0 ? "+" + duelsSkywarsWinsDifference : duelsSkywarsWinsDifference).append(")\n");
+                        changesFieldValue.append("\u2022Losses: ").append(duelsSkywarsLosses).append(" (").append(duelsSkywarsLossesDifference > 0 ? "+" + duelsSkywarsLossesDifference : duelsSkywarsLossesDifference).append(")\n");
+                        changesFieldValue.append("\u2022W/L: ").append(duelsSkywarsWL).append(" (").append(duelsSkywarsWLDifference > 0 ? "+" + duelsSkywarsWLDifference : duelsSkywarsWLDifference).append(")\n");
+                        changesFieldValue.append("\u2022Kills: ").append(duelsSkywarsKills).append(" (").append(duelsSkywarsKillsDifference > 0 ? "+" + duelsSkywarsKillsDifference : duelsSkywarsKillsDifference).append(")\n");
+                        changesFieldValue.append("\u2022Deaths: ").append(duelsSkywarsDeaths).append(" (").append(duelsSkywarsDeathsDifference > 0 ? "+" + duelsSkywarsDeathsDifference : duelsSkywarsDeathsDifference).append(")\n");
+                        changesFieldValue.append("\u2022K/D: ").append(duelsSkywarsKD).append(" (").append(duelsSkywarsKDDifference > 0 ? "+" + duelsSkywarsKDDifference : duelsSkywarsKDDifference).append(")\n");
 
                         changesFieldValue.append("`");
 
@@ -157,35 +156,35 @@ public class StatsTracker extends TimerTask {
                         //region Sumo Duels
                         changesFieldValue = new StringBuilder().append("`");
 
-                        int sumoOldWins = oldDuelsObject.optInt("sumo_duel_wins");
-                        int sumoOldLosses = oldDuelsObject.optInt("sumo_duel_losses");
-                        double sumoOldWL = Utils.round(sumoOldWins / (double) sumoOldLosses, 3);
-                        int sumoOldKills = oldDuelsObject.optInt("sumo_duel_kills");
-                        int sumoOldDeaths = oldDuelsObject.optInt("sumo_duel_deaths");
-                        double sumoOldKD = Utils.round(sumoOldKills / (double) sumoOldDeaths, 3);
+                        int duelsSumoOldWins = oldDuelsObject.optInt("sumo_duel_wins");
+                        int duelsSumoOldLosses = oldDuelsObject.optInt("sumo_duel_losses");
+                        double duelsSumoOldWL = Utils.round(duelsSumoOldWins / (double) duelsSumoOldLosses, 3);
+                        int duelsSumoOldKills = oldDuelsObject.optInt("sumo_duel_kills");
+                        int duelsSumoOldDeaths = oldDuelsObject.optInt("sumo_duel_deaths");
+                        double duelsSumoOldKD = Utils.round(duelsSumoOldKills / (double) duelsSumoOldDeaths, 3);
 
-                        int sumoWins = duelsObject.optInt("sumo_duel_wins");
-                        int sumoLosses = duelsObject.optInt("sumo_duel_losses");
-                        double sumoWL = Utils.round(sumoWins / (double) sumoLosses, 3);
-                        int sumoKills = duelsObject.optInt("sumo_duel_kills");
-                        int sumoDeaths = duelsObject.optInt("sumo_duel_deaths");
-                        double sumoKD = Utils.round(sumoKills / (double) sumoDeaths, 3);
+                        int duelsSumoWins = duelsObject.optInt("sumo_duel_wins");
+                        int duelsSumoLosses = duelsObject.optInt("sumo_duel_losses");
+                        double duelsSumoWL = Utils.round(duelsSumoWins / (double) duelsSumoLosses, 3);
+                        int duelsSumoKills = duelsObject.optInt("sumo_duel_kills");
+                        int duelsSumoDeaths = duelsObject.optInt("sumo_duel_deaths");
+                        double duelsSumoKD = Utils.round(duelsSumoKills / (double) duelsSumoDeaths, 3);
 
-                        int sumoWinsDifference = sumoWins - sumoOldWins;
-                        int sumoLossesDifference = sumoLosses - sumoOldLosses;
-                        double sumoWLDifference = Utils.round(sumoWL - sumoOldWL, 3);
-                        int sumoKillsDifference = sumoKills - sumoOldKills;
-                        int sumoDeathsDifference = sumoDeaths - sumoOldDeaths;
-                        double sumoKDDifference = Utils.round(sumoKD - sumoOldKD, 3);
+                        int duelsSumoWinsDifference = duelsSumoWins - duelsSumoOldWins;
+                        int duelsSumoLossesDifference = duelsSumoLosses - duelsSumoOldLosses;
+                        double duelsSumoWLDifference = Utils.round(duelsSumoWL - duelsSumoOldWL, 3);
+                        int duelsSumoKillsDifference = duelsSumoKills - duelsSumoOldKills;
+                        int duelsSumoDeathsDifference = duelsSumoDeaths - duelsSumoOldDeaths;
+                        double duelsSumoKDDifference = Utils.round(duelsSumoKD - duelsSumoOldKD, 3);
 
-                        showChangesField = sumoWinsDifference != 0 || sumoLossesDifference != 0 || sumoWLDifference != 0.0 || sumoKillsDifference != 0 || sumoDeathsDifference != 0 || sumoKDDifference != 0;
+                        showChangesField = duelsSumoWinsDifference != 0 || duelsSumoLossesDifference != 0 || duelsSumoWLDifference != 0.0 || duelsSumoKillsDifference != 0 || duelsSumoDeathsDifference != 0 || duelsSumoKDDifference != 0;
 
-                        changesFieldValue.append("\u2022Wins: ").append(sumoWins).append(" (").append(sumoWinsDifference > 0 ? "+" + sumoWinsDifference : sumoWinsDifference).append(")\n");
-                        changesFieldValue.append("\u2022Losses: ").append(sumoLosses).append(" (").append(sumoLossesDifference > 0 ? "+" + sumoLossesDifference : sumoLossesDifference).append(")\n");
-                        changesFieldValue.append("\u2022W/L: ").append(sumoWL).append(" (").append(sumoWLDifference > 0 ? "+" + sumoWLDifference : sumoWLDifference).append(")\n");
-                        changesFieldValue.append("\u2022Kills: ").append(sumoKills).append(" (").append(sumoKillsDifference > 0 ? "+" + sumoKillsDifference : sumoKillsDifference).append(")\n");
-                        changesFieldValue.append("\u2022Deaths: ").append(sumoDeaths).append(" (").append(sumoDeathsDifference > 0 ? "+" + sumoDeathsDifference : sumoDeathsDifference).append(")\n");
-                        changesFieldValue.append("\u2022K/D: ").append(sumoKD).append(" (").append(sumoKDDifference > 0 ? "+" + sumoKDDifference : sumoKDDifference).append(")\n");
+                        changesFieldValue.append("\u2022Wins: ").append(duelsSumoWins).append(" (").append(duelsSumoWinsDifference > 0 ? "+" + duelsSumoWinsDifference : duelsSumoWinsDifference).append(")\n");
+                        changesFieldValue.append("\u2022Losses: ").append(duelsSumoLosses).append(" (").append(duelsSumoLossesDifference > 0 ? "+" + duelsSumoLossesDifference : duelsSumoLossesDifference).append(")\n");
+                        changesFieldValue.append("\u2022W/L: ").append(duelsSumoWL).append(" (").append(duelsSumoWLDifference > 0 ? "+" + duelsSumoWLDifference : duelsSumoWLDifference).append(")\n");
+                        changesFieldValue.append("\u2022Kills: ").append(duelsSumoKills).append(" (").append(duelsSumoKillsDifference > 0 ? "+" + duelsSumoKillsDifference : duelsSumoKillsDifference).append(")\n");
+                        changesFieldValue.append("\u2022Deaths: ").append(duelsSumoDeaths).append(" (").append(duelsSumoDeathsDifference > 0 ? "+" + duelsSumoDeathsDifference : duelsSumoDeathsDifference).append(")\n");
+                        changesFieldValue.append("\u2022K/D: ").append(duelsSumoKD).append(" (").append(duelsSumoKDDifference > 0 ? "+" + duelsSumoKDDifference : duelsSumoKDDifference).append(")\n");
 
                         changesFieldValue.append("`");
 
@@ -197,44 +196,44 @@ public class StatsTracker extends TimerTask {
                         //region UHC Duels
                         changesFieldValue = new StringBuilder().append("`");
 
-                        int uhcOldWins = oldDuelsObject.optInt("uhc_duel_wins");
-                        int uhcOldLosses = oldDuelsObject.optInt("uhc_duel_losses");
-                        double uhcOldWL = Utils.round(uhcOldWins / (double) uhcOldLosses, 3);
-                        int uhcOldKills = oldDuelsObject.optInt("uhc_duel_kills");
-                        int uhcOldDeaths = oldDuelsObject.optInt("uhc_duel_deaths");
-                        double uhcOldKD = Utils.round(uhcOldKills / (double) uhcOldDeaths, 3);
+                        int duelsUhcOldWins = oldDuelsObject.optInt("uhc_duel_wins");
+                        int duelsUhcOldLosses = oldDuelsObject.optInt("uhc_duel_losses");
+                        double duelsUhcOldWL = Utils.round(duelsUhcOldWins / (double) duelsUhcOldLosses, 3);
+                        int duelsUhcOldKills = oldDuelsObject.optInt("uhc_duel_kills");
+                        int duelsUhcOldDeaths = oldDuelsObject.optInt("uhc_duel_deaths");
+                        double duelsUhcOldKD = Utils.round(duelsUhcOldKills / (double) duelsUhcOldDeaths, 3);
 
-                        int uhcWins = duelsObject.optInt("uhc_duel_wins");
-                        int uhcLosses = duelsObject.optInt("uhc_duel_losses");
-                        double uhcWL = Utils.round(uhcWins / (double) uhcLosses, 3);
-                        int uhcKills = duelsObject.optInt("uhc_duel_kills");
-                        int uhcDeaths = duelsObject.optInt("uhc_duel_deaths");
-                        double uhcKD = Utils.round(uhcKills / (double) uhcDeaths, 3);
+                        int duelsUhcWins = duelsObject.optInt("uhc_duel_wins");
+                        int duelsUhcLosses = duelsObject.optInt("uhc_duel_losses");
+                        double duelsUhcWL = Utils.round(duelsUhcWins / (double) duelsUhcLosses, 3);
+                        int duelsUhcKills = duelsObject.optInt("uhc_duel_kills");
+                        int duelsUhcDeaths = duelsObject.optInt("uhc_duel_deaths");
+                        double duelsUhcKD = Utils.round(duelsUhcKills / (double) duelsUhcDeaths, 3);
 
-                        int uhcWinsDifference = uhcWins - uhcOldWins;
-                        int uhcLossesDifference = uhcLosses - uhcOldLosses;
-                        double uhcWLDifference = Utils.round(uhcWL - uhcOldWL, 3);
-                        int uhcKillsDifference = uhcKills - uhcOldKills;
-                        int uhcDeathsDifference = uhcDeaths - uhcOldDeaths;
-                        double uhcKDDifference = Utils.round(uhcKD - uhcOldKD, 3);
+                        int duelsUhcWinsDifference = duelsUhcWins - duelsUhcOldWins;
+                        int duelsUhcLossesDifference = duelsUhcLosses - duelsUhcOldLosses;
+                        double duelsUhcWLDifference = Utils.round(duelsUhcWL - duelsUhcOldWL, 3);
+                        int duelsUhcKillsDifference = duelsUhcKills - duelsUhcOldKills;
+                        int duelsUhcDeathsDifference = duelsUhcDeaths - duelsUhcOldDeaths;
+                        double duelsUhcKDDifference = Utils.round(duelsUhcKD - duelsUhcOldKD, 3);
 
-                        showChangesField = uhcWinsDifference != 0 || uhcLossesDifference != 0 || uhcWLDifference != 0.0 || uhcKillsDifference != 0 || uhcDeathsDifference != 0 || uhcKDDifference != 0;
+                        showChangesField = duelsUhcWinsDifference != 0 || duelsUhcLossesDifference != 0 || duelsUhcWLDifference != 0.0 || duelsUhcKillsDifference != 0 || duelsUhcDeathsDifference != 0 || duelsUhcKDDifference != 0;
 
-                        changesFieldValue.append("\u2022Wins: ").append(uhcWins).append(" (").append(uhcWinsDifference > 0 ? "+" + uhcWinsDifference : uhcWinsDifference).append(")\n");
-                        changesFieldValue.append("\u2022Losses: ").append(uhcLosses).append(" (").append(uhcLossesDifference > 0 ? "+" + uhcLossesDifference : uhcLossesDifference).append(")\n");
-                        changesFieldValue.append("\u2022W/L: ").append(uhcWL).append(" (").append(uhcWLDifference > 0 ? "+" + uhcWLDifference : uhcWLDifference).append(")\n");
-                        changesFieldValue.append("\u2022Kills: ").append(uhcKills).append(" (").append(uhcKillsDifference > 0 ? "+" + uhcKillsDifference : uhcKillsDifference).append(")\n");
-                        changesFieldValue.append("\u2022Deaths: ").append(uhcDeaths).append(" (").append(uhcDeathsDifference > 0 ? "+" + uhcDeathsDifference : uhcDeathsDifference).append(")\n");
-                        changesFieldValue.append("\u2022K/D: ").append(uhcKD).append(" (").append(uhcKDDifference > 0 ? "+" + uhcKDDifference : uhcKDDifference).append(")\n");
+                        changesFieldValue.append("\u2022Wins: ").append(duelsUhcWins).append(" (").append(duelsUhcWinsDifference > 0 ? "+" + duelsUhcWinsDifference : duelsUhcWinsDifference).append(")\n");
+                        changesFieldValue.append("\u2022Losses: ").append(duelsUhcLosses).append(" (").append(duelsUhcLossesDifference > 0 ? "+" + duelsUhcLossesDifference : duelsUhcLossesDifference).append(")\n");
+                        changesFieldValue.append("\u2022W/L: ").append(duelsUhcWL).append(" (").append(duelsUhcWLDifference > 0 ? "+" + duelsUhcWLDifference : duelsUhcWLDifference).append(")\n");
+                        changesFieldValue.append("\u2022Kills: ").append(duelsUhcKills).append(" (").append(duelsUhcKillsDifference > 0 ? "+" + duelsUhcKillsDifference : duelsUhcKillsDifference).append(")\n");
+                        changesFieldValue.append("\u2022Deaths: ").append(duelsUhcDeaths).append(" (").append(duelsUhcDeathsDifference > 0 ? "+" + duelsUhcDeathsDifference : duelsUhcDeathsDifference).append(")\n");
+                        changesFieldValue.append("\u2022K/D: ").append(duelsUhcKD).append(" (").append(duelsUhcKDDifference > 0 ? "+" + duelsUhcKDDifference : duelsUhcKDDifference).append(")\n");
 
                         changesFieldValue.append("`");
 
                         if (showChangesField)
                             duelsStatsEmbed.addField("UHC Duels", changesFieldValue.toString(), false);
 
-                        if (duelsStatsEmbed.getFields().size() > 0) embeds.add(duelsStatsEmbed);
-
                         //endregion
+
+                        if (duelsStatsEmbed.getFields().size() > 0) embeds.add(duelsStatsEmbed);
 
                         //region Overall Bedwars
                         changesFieldValue = new StringBuilder().append("`");
@@ -521,8 +520,6 @@ public class StatsTracker extends TimerTask {
                         embeds.forEach(embed -> Objects.requireNonNull(BotMain.bot.getTextChannelById(channelToSendTo)).sendMessage(embed.build()).queue());
                         BotMain.oldTrackerPlayerObjectHashMap.replace(key, newPlayerObject);
                     }
-
-
                 } else {
                     BotMain.oldTrackerPlayerObjectHashMap.put(key, newPlayerObject);
                     if (newPlayerObject.getStatus().equals("Online")) {
