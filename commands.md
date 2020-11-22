@@ -7,6 +7,9 @@
 | skywars | \<ign\> | Gets the players Skywars stats |
 | ranked | \<ign\> | Gets the players Ranked Skywars stats |
 | bedwars | \<ign\> | Gets the players Bedwars stats |
+| **Stats Tracking** |
+| setkey | \<uuid\> \<apikey\> | Sets the UUID with an API key used for stats tracking |
+| settrackingchannel | \<uuid\> | Sets the channel for tracking the players (UUID) stats |
 | **General** |
 | help | | Send list of commands and link to this page |
 

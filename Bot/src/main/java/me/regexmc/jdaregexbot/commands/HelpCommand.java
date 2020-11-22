@@ -2,49 +2,46 @@ package me.regexmc.jdaregexbot.commands;
 
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
-import me.regexmc.jdaregexbot.util.RankUtils;
+import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
+import me.regexmc.jdaregexbot.BotMain;
+import me.regexmc.jdaregexbot.util.PageHandler;
 import me.regexmc.jdaregexbot.util.Utils;
 import net.dv8tion.jda.api.EmbedBuilder;
 
+import java.util.LinkedHashMap;
+
 public class HelpCommand extends Command {
-    public HelpCommand() {
+    private final EventWaiter waiter;
+
+    public HelpCommand(EventWaiter waiter) {
         this.name = "help";
         this.help = "List commands";
         this.cooldown = 10;
+        this.category = Utils.CommandCategories.GENERIC.getCategory();
+        this.waiter = waiter;
     }
 
     @Override
     protected void execute(CommandEvent event) {
         if (Utils.isCommandChannel(event)) {
-            EmbedBuilder helpEmbed = new EmbedBuilder();
+            LinkedHashMap<Category, EmbedBuilder> embedBuilderHashMap = new LinkedHashMap<>();
 
-            helpEmbed.setTitle("Commands", "https://regexmc.github.io/");
-            helpEmbed.addField("Hypixel Commands", """
-                    stats <ign> - Get the players general hypixel stats
-                    skywars <ign> - Gets the players skywars stats
-                    ranked <ign> - Gets the players ranked positions (does not get current season)
-                    bedwars <ign> - Get the players bedwars stats""", true);
+            BotMain.builtClient.getCommands().forEach(command -> {
+                if (command.isOwnerCommand() && !Utils.isAdmin(event)) return;
 
-            if (Utils.isAdmin(event)) {
-                helpEmbed.addField("Admin Commands", """
-                        airing [latest / hours into future]
-                        anilist <username>
-                        animesearch [help]
-                        hentaisearch [help]
-                        randomhentai
-                        compressimage
-                        charcount <input>
-                        clearcache [-y]
-                        convert [help]
-                        eval <js>
-                        parsedate <epoch>
-                        timezone""", false);
-            }
+                Category category = command.getCategory();
 
-            helpEmbed.setFooter("@RegexMC");
-            helpEmbed.setColor(RankUtils.Ranks.ADMIN.getColor());
-
-            event.reply(helpEmbed.build());
+                if (embedBuilderHashMap.containsKey(category)) {
+                    EmbedBuilder embed = embedBuilderHashMap.get(category);
+                    embed.addField(command.getName(), command.getHelp(), false);
+                    embedBuilderHashMap.replace(category, embed);
+                } else {
+                    embedBuilderHashMap.put(category, new EmbedBuilder().setTitle(category.getName()).addField(command.getName(), command.getHelp(), false));
+                }
+            });
+            EmbedBuilder[] embedBuilderArrayList = new EmbedBuilder[embedBuilderHashMap.values().size()];
+            embedBuilderHashMap.values().toArray(embedBuilderArrayList);
+            event.getChannel().sendMessage(embedBuilderArrayList[0].build()).queue(msg -> PageHandler.managePages(waiter, event.getAuthor(), msg, embedBuilderArrayList, 0, true));
         }
     }
 }

@@ -22,6 +22,7 @@ public class ParseDateCommand extends Command {
             }
         };
         this.aliases = new String[]{"epoch"};
+        this.category = Utils.CommandCategories.GENERIC.getCategory();
     }
 
     @Override

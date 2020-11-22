@@ -25,6 +25,7 @@ public class CompressImageCommand extends Command {
                 commandEvent.reply(this.help);
             }
         };
+        this.category = Utils.CommandCategories.IMAGE.getCategory();
     }
 
     @Override

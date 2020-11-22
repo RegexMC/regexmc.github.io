@@ -26,6 +26,7 @@ public class StatsCommand extends Command {
         this.help = "Cooldown: " + this.cooldown +
                 " | Syntax: `" + this.arguments +
                 "`\nGets the general Hypixel stats of " + this.arguments;
+        this.category = Utils.CommandCategories.HYPIXEL.getCategory();
     }
 
     private static MessageEmbed getStatsEmbed(String playerName) {

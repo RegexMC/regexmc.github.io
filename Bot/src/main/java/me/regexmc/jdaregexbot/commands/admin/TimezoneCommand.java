@@ -25,6 +25,7 @@ public class TimezoneCommand extends Command {
             }
         };
         this.aliases = new String[]{"tz"};
+        this.category = Utils.CommandCategories.GENERIC.getCategory();
     }
 
     @Override

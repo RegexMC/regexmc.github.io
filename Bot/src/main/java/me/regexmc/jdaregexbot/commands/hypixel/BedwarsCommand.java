@@ -31,6 +31,7 @@ public class BedwarsCommand extends Command {
                 " | Syntax: `" + this.arguments +
                 "`\nGets the Bedwars stats of " + this.arguments;
         this.aliases = new String[]{"bw"};
+        this.category = Utils.CommandCategories.HYPIXEL.getCategory();
     }
 
     private static MessageEmbed[] getStatsEmbed(String playerName) {

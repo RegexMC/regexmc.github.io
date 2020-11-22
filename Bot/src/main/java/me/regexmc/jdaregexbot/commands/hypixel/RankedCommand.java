@@ -32,6 +32,7 @@ public class RankedCommand extends Command {
         this.help = "Cooldown: " + this.cooldown +
                 " | Syntax: `" + this.arguments +
                 "`\nGets the Ranked stats of " + this.arguments;
+        this.category = Utils.CommandCategories.HYPIXEL.getCategory();
     }
 
     private static MessageEmbed[] getStatsEmbed(String playerName) {

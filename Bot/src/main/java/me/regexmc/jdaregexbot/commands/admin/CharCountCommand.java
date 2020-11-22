@@ -21,6 +21,7 @@ public class CharCountCommand extends Command {
                 commandEvent.reply(this.help);
             }
         };
+        this.category = Utils.CommandCategories.GENERIC.getCategory();
     }
 
     @Override

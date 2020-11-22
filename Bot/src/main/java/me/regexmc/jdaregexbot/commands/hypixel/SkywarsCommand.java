@@ -28,6 +28,8 @@ public class SkywarsCommand extends Command {
         this.help = "Cooldown: " + this.cooldown +
                 " | Syntax: `" + this.arguments +
                 "`\nGets the Skywars stats of " + this.arguments;
+        this.aliases = new String[]{"sw"};
+        this.category = Utils.CommandCategories.HYPIXEL.getCategory();
     }
 
     private static MessageEmbed[] getStatsEmbeds(String playerName) {

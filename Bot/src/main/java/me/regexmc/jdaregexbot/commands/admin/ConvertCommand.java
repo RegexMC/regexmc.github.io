@@ -5,6 +5,8 @@ import com.jagrosh.jdautilities.command.CommandEvent;
 import me.regexmc.jdaregexbot.util.Utils;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 public class ConvertCommand extends Command {
 
     public ConvertCommand() {
@@ -20,6 +22,7 @@ public class ConvertCommand extends Command {
                 commandEvent.reply(this.help);
             }
         };
+        this.category = Utils.CommandCategories.GENERIC.getCategory();
     }
 
     @Override
@@ -155,7 +158,12 @@ public class ConvertCommand extends Command {
                     String baseCurrency = args[2];
                     String resultCurrency = args[3];
 
-                    JSONObject exchangeRatesJSON = Utils.readJsonFromUrl("https://api.exchangeratesapi.io/latest?base=" + baseCurrency.toUpperCase());
+                    JSONObject exchangeRatesJSON = null;
+                    try {
+                        exchangeRatesJSON = Utils.readJsonFromUrl("https://api.exchangeratesapi.io/latest?base=" + baseCurrency.toUpperCase());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     if (exchangeRatesJSON != null) {
                         try {
                             double result = Utils.round(Double.parseDouble(baseAmount) * exchangeRatesJSON.getJSONObject("rates").getDouble(resultCurrency.toUpperCase()), 2);

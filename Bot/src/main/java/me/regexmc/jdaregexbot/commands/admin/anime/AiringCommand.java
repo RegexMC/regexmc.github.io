@@ -39,6 +39,7 @@ public class AiringCommand extends Command {
             }
         };
         this.waiter = waiter;
+        this.category = Utils.CommandCategories.ANIME.getCategory();
     }
 
     @Override

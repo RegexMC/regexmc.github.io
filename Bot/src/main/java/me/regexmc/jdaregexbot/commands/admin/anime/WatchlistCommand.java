@@ -38,6 +38,7 @@ public class WatchlistCommand extends Command {
             }
         };
         this.waiter = waiter;
+        this.category = Utils.CommandCategories.ANIME.getCategory();
     }
 
     private static Color getColorFromString(String color) {

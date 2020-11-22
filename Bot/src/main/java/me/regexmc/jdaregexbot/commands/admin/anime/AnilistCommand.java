@@ -32,6 +32,7 @@ public class AnilistCommand extends Command {
                 commandEvent.reply(this.help);
             }
         };
+        this.category = Utils.CommandCategories.ANIME.getCategory();
     }
 
     private static Color getColorFromString(String color) {

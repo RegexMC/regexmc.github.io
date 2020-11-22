@@ -22,12 +22,13 @@ public class PurgeSelfCommand extends Command {
         this.arguments = "[messages to scan]";
         this.help = "Cooldown: " + this.cooldown +
                 " | Syntax: `" + this.arguments +
-                "`\nDeletes bots’ own messages within the last [messages]";
+                "`\nDeletes bots' own messages within the last [messages]";
         this.helpBiConsumer = (commandEvent, command) -> {
             if (Utils.isAdmin(commandEvent)) {
                 commandEvent.reply(this.help);
             }
         };
+        this.category = Utils.CommandCategories.GENERIC.getCategory();
     }
 
     @Override

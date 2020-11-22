@@ -10,6 +10,7 @@ public class ResizeImageCommand extends Command {
     public ResizeImageCommand(EventWaiter waiter) {
         this.name = "base";
         this.help = "desc";
+        this.category = Utils.CommandCategories.IMAGE.getCategory();
     }
 
     @Override

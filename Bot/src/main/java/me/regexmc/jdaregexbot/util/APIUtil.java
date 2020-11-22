@@ -15,7 +15,7 @@ public class APIUtil {
     public static HypixelAPI API;
     private static int total = 0;
 
-    public static String getUUIDFromName(String name) {
+    public static String getUUIDFromName(String name) throws IOException {
         String url = "https://api.mojang.com/users/profiles/minecraft/" + name;
         JSONObject mojangAPIJson = Utils.readJsonFromUrl(url);
         Utils.log("Called Mojang API", Utils.ErrorTypes.API);

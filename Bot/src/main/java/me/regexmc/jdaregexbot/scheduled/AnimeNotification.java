@@ -1,4 +1,4 @@
-package me.regexmc.scheduled;
+package me.regexmc.jdaregexbot.scheduled;
 
 import com.google.gson.JsonParser;
 import me.regexmc.jdaregexbot.BotMain;

@@ -36,6 +36,7 @@ public class AnimeSearchCommand extends Command {
                 commandEvent.reply(this.help);
             }
         };
+        this.category = Utils.CommandCategories.ANIME.getCategory();
     }
 
     @Override

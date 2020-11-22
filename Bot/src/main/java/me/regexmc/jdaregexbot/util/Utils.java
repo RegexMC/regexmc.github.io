@@ -1,6 +1,7 @@
 package me.regexmc.jdaregexbot.util;
 
 import com.google.gson.JsonParser;
+import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 import me.regexmc.jdaregexbot.BotMain;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -28,12 +29,24 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.Period;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 
 public class Utils {
     //region Internal
+
+    /**
+     * Compresses an image by the quality inputted
+     *
+     * @param attachmentPath full path of attachment to compress
+     * @param imageFileName  file name of the attachment
+     * @param suffix         what to proceed the generated files' filename with (typically a message id)
+     * @param quality        quality to compress image by (recommended 0.95f)
+     * @return returns a File with the new compressed image
+     * @throws IOException
+     */
     public static File compressImage(String attachmentPath, String imageFileName, int suffix, float quality) throws IOException {
         InputStream is = new FileInputStream(attachmentPath + imageFileName);
         String newName = imageFileName;
@@ -94,6 +107,12 @@ public class Utils {
                                         TreeMap::new));
     }
 
+    /**
+     * Log information to current log file
+     *
+     * @param in   data to write to log
+     * @param type what kind of data it is (error, info, etc.)
+     */
     public static void log(Object in, ErrorTypes type) {
         String timeStamp = new SimpleDateFormat("yyyy_MM_dd").format(new java.util.Date());
         ArrayList<String> logHistory = new ArrayList<>();
@@ -180,6 +199,23 @@ public class Utils {
         }
 
     }
+
+    public enum CommandCategories {
+        ANIME(new Command.Category("Anime")),
+        IMAGE(new Command.Category("Image")),
+        GENERIC(new Command.Category("Generic")),
+        HYPIXEL(new Command.Category("Hypixel"));
+
+        private final Command.Category category;
+
+        CommandCategories(Command.Category category) {
+            this.category = category;
+        }
+
+        public Command.Category getCategory() {
+            return category;
+        }
+    }
     //endregion
 
     //region Hypixel
@@ -245,21 +281,30 @@ public class Utils {
     //endregion
 
     //region File Utils
+
+    /**
+     * Checks if a file or path exists or not
+     *
+     * @param path file path to check if exists
+     * @return a boolean of whether or not the provided file path was found
+     */
     public static Boolean exists(String path) {
         return org.apache.commons.io.FileUtils.getFile(path).exists();
     }
 
-    public static void writeToFile(String path, String content) {
-        try {
-            FileWriter writer = new FileWriter(path);
-            writer.write(content);
-            writer.close();
-        } catch (IOException e) {
-            Utils.log("An error occurred writing to file.", Utils.ErrorTypes.ERROR);
-            Utils.log(e, Utils.ErrorTypes.ERROR);
-            e.printStackTrace();
-        }
+    /**
+     * Overwrites a file with new content
+     *
+     * @param path    file path to write to
+     * @param content content to write to the file
+     * @throws IOException
+     */
+    public static void writeToFile(String path, String content) throws IOException {
+        FileWriter writer = new FileWriter(path);
+        writer.write(content);
+        writer.close();
     }
+
 
     public static void appendToFile(String path, String content) {
         try {
@@ -318,14 +363,11 @@ public class Utils {
     //endregion
 
     //region JSON Utils
-    public static JSONObject readJsonFromUrl(String url) {
-        try (InputStream is = new URL(url).openStream()) {
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-            String jsonText = readAll(rd);
-            return new JSONObject(jsonText);
-        } catch (IOException | JSONException e) {
-            return null;
-        }
+    public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+        InputStream is = new URL(url).openStream();
+        BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+        String jsonText = readAll(rd);
+        return new JSONObject(jsonText);
     }
 
     public static JSONObject readJsonFromFile(String path) throws IOException {
@@ -363,6 +405,13 @@ public class Utils {
     }
     //endregion
 
+    /**
+     * Formats the provided minutes in a readable format
+     *
+     * @param time   amount of minutes to get formatted time from
+     * @param format the format to return the formatted time in
+     * @return the provided time returned as (default) "dd:hh:mm" or (long) "d days h hours m minutes"
+     */
     public static String timeConvert(long time, String format) {
         String days = time / 24 / 60 + "";
         String hours = time / 60 % 24 + "";
@@ -380,4 +429,27 @@ public class Utils {
         }
     }
 
+    /**
+     * Get date object formatted as yyyy-MM-dd HH:mm:ss
+     *
+     * @param date the date object to format
+     * @return the formatted date
+     */
+    public static String parseDate(Date date) {
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdfDate.format(date);
+    }
+
+    /**
+     * Get a diff between two dates
+     *
+     * @param date1    the oldest date
+     * @param date2    the newest date
+     * @param timeUnit the unit in which you want the diff
+     * @return the diff value, in the provided unit
+     */
+    public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
+        long diffInMillies = date2.getTime() - date1.getTime();
+        return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
+    }
 }
