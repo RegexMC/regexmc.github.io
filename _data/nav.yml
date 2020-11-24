@@ -7,5 +7,7 @@ list:
     url: "about"
   - title: Extra Links
     url: "other"
+  - title: Forge For Dummies
+    url: "forgefordummies"
   - title: Pollefeys Live Stats
     url: "/regex.rest/livestats/"
