@@ -1,6 +1,5 @@
 package me.regexmc.jdaregexbot.commands.admin.anime;
 
-import com.google.gson.JsonParser;
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
@@ -63,8 +62,9 @@ public class AiringCommand extends Command {
                         xHours = Utils.parseInt(arg) > (7 * 24 * 3600) ? 604800 : Utils.parseInt(arg);
                 }
 
-                List<Object> animeIds = new JSONObject(JsonParser.parseString(Utils.loadResourceAsString("anime.json")).getAsJsonObject().toString())
-                        .getJSONArray("ids").toList();
+               // List<Object> animeIds = new JSONObject(JsonParser.parseString(Utils.loadResourceAsString("anime.json")).getAsJsonObject().toString())
+               //         .getJSONArray("ids").toList();
+                List<Object> animeIds = new JSONObject(Utils.readJsonFromFile(Utils.loadResourceAsString("anime.json"))).getJSONArray("ids").toList();
 
                 StringBuilder query = new StringBuilder();
                 query.append("{\"query\":\"{");

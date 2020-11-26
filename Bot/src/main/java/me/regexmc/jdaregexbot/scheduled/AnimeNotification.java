@@ -1,6 +1,5 @@
 package me.regexmc.jdaregexbot.scheduled;
 
-import com.google.gson.JsonParser;
 import me.regexmc.jdaregexbot.BotMain;
 import me.regexmc.jdaregexbot.util.Utils;
 import org.json.JSONArray;
@@ -24,8 +23,10 @@ public class AnimeNotification extends TimerTask {
         StringBuilder msg = new StringBuilder();
 
         try {
-            List<Object> animeIds = new JSONObject(JsonParser.parseString(Utils.loadResourceAsString("anime.json")).getAsJsonObject().toString())
-                    .getJSONArray("ids").toList();
+            //List<Object> animeIds = new JSONObject(JsonParser.parseString(Utils.loadResourceAsString("anime.json")).getAsJsonObject().toString())
+             //       .getJSONArray("ids").toList();
+
+            List<Object> animeIds = new JSONObject(Utils.readJsonFromFile(Utils.loadResourceAsString("anime.json"))).getJSONArray("ids").toList();
 
             StringBuilder query = new StringBuilder();
             query.append("{\"query\":\"{");

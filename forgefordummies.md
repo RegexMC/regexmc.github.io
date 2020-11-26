@@ -95,7 +95,6 @@ Also note, unless you are trying to record/stream, or are frequently screen-shar
 * Clouds - Off
 * Trees - Fast
 * Sky - Off
-* Sun and Moon - Off
 * Fog - Off
 * Translucent Blocks - Off
 * Dropped Items - Fast
@@ -116,13 +115,13 @@ Also note, unless you are trying to record/stream, or are frequently screen-shar
 * Minimap Levels - Off
 * Anistropic Filtering - Off
 * Better Grass - Off
-* Custom Sky - Off
+* Custom Sky - Off (Leave this on if you want a custom sky, requires sun and moon to be turned on in Details)
 * Minimap Type - Nearest
 * Antialiasing - Off
 * Better Snow - Off
 
 ### Performance
-* Smooth FPS - (test for yourself)
+* Smooth FPS - Off (test for yourself)
 * Fast Render - On
 * Chunk Updates - 1
 * Region Renders Off

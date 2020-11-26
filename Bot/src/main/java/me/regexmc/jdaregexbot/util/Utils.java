@@ -1,6 +1,5 @@
 package me.regexmc.jdaregexbot.util;
 
-import com.google.gson.JsonParser;
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 import me.regexmc.jdaregexbot.BotMain;
@@ -371,7 +370,8 @@ public class Utils {
     }
 
     public static JSONObject readJsonFromFile(String path) throws IOException {
-        return new JSONObject(JsonParser.parseString(Utils.readFile(path)).getAsJsonObject().toString());
+        //return new JSONObject(JsonParser.parseString(Utils.readFile(path)).getAsJsonObject().toString());
+        return new JSONObject(Utils.readFile(path));
     }
     //endregion
 
