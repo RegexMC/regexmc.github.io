@@ -21,10 +21,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
-public class AnimeSearchCommand extends Command {
+public class MangaSearchCommand extends Command {
 
-    public AnimeSearchCommand() {
-        this.name = "animesearch";
+    public MangaSearchCommand() {
+        this.name = "mangasearch";
         this.cooldown = 10;
         this.ownerCommand = true;
         this.arguments = "--tags <tags> --tags_exclude <excluded_tags> --genre <genres> --genre_exclude <genres_excluded> --title <title>";
@@ -380,8 +380,7 @@ public class AnimeSearchCommand extends Command {
 
                 try {
                     String queryFormat = Utils.loadResourceAsString("anilist_searchquery");
-                    queryFormat = queryFormat.replace("%%animetype%%", "ANIME");
-
+                    queryFormat = queryFormat.replace("%%animetype%%", "MANGA");
                     ArrayList<String> flags = new ArrayList<>(Arrays.asList(Arrays.copyOfRange(event.getMessage().getContentRaw().split("--"), 1, event.getMessage().getContentRaw().split("--").length)));
 
                     for (String s : flags) {

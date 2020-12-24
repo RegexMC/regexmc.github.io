@@ -1,6 +1,6 @@
 {
   Page(page: 1, perPage: 25) {
-    media(type: ANIME,
+    media(type: %%animetype%%,
           genre_in: %%genrein%%,
           genre_not_in:%%genrenotin%%,
           tag_in: %%tagin%%,
