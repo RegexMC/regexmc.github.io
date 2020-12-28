@@ -16,4 +16,7 @@ Bot/.gradle/*
 Bot/gradle/*
 Bot/resources/*
 Bot/src/main/resources/*
-NodeBot
+NodeBot/config.json
+NodeBot/package-lock.json
+NodeBot/node_modules
+NodeBot/cache

@@ -1,0 +1,25 @@
+{
+    "discord_token": "",
+    "hypixel_api_key": "",
+    "saucenao_api_key": "",
+    "anilist_id": "",
+    "anilist_secret": "",
+    "osu_api_key": "",
+    "admins": [
+        "",
+        ""
+    ],
+    "mangadex_rss": "https://mangadex.org/rss/*******",
+    "mangadex_manga": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ],
+    "mangadex_role": "",
+    "mangadex_channel": ""
+}
