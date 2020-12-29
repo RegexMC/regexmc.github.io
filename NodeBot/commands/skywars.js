@@ -6,6 +6,7 @@ const fetch = require('node-fetch');
 const usernamesFile = './cache/usernames.json';
 const usernames = require('../cache/usernames.json');
 const fs = require('fs');
+const utils = require('../utils');
 
 /**
  * @param {Discord.Client} discordClient
@@ -45,14 +46,34 @@ exports.run = async (discordClient, hypixelClient, message, args) => {
             var level = getSwLevel(stats.skywars_experience);
 
             // provided by Shmeado
-            var pres_icons = {"default": "⋆",
-            "iron_prestige": "✙", "gold_prestige": "❤", "diamond_prestige": "☠",
-            "emerald_prestige": "✦", "sapphire_prestige": "✌", "ruby_prestige": "❦",
-            "crystal_prestige": "✵", "opal_prestige": "❣", "amethyst_prestige": "☯",
-            "rainbow_prestige": "✺", "mythic_prestige": "ಠ_ಠ", "favor_icon": "⚔",
-            "angel_1": "★", "angel_2": "☆", "angel_3": "⁕", "angel_4": "✶", "angel_5": "✳", "angel_6": "✴",
-            "angel_7": "✷", "angel_8": "❋", "angel_9": "✼", "angel_10": "❂", "angel_11": "❁", "angel_12": "☬",
-            "omega_icon": "Ω"}
+            var pres_icons = {
+                "default": "⋆",
+                "iron_prestige": "✙",
+                "gold_prestige": "❤",
+                "diamond_prestige": "☠",
+                "emerald_prestige": "✦",
+                "sapphire_prestige": "✌",
+                "ruby_prestige": "❦",
+                "crystal_prestige": "✵",
+                "opal_prestige": "❣",
+                "amethyst_prestige": "☯",
+                "rainbow_prestige": "✺",
+                "mythic_prestige": "ಠ_ಠ",
+                "favor_icon": "⚔",
+                "angel_1": "★",
+                "angel_2": "☆",
+                "angel_3": "⁕",
+                "angel_4": "✶",
+                "angel_5": "✳",
+                "angel_6": "✴",
+                "angel_7": "✷",
+                "angel_8": "❋",
+                "angel_9": "✼",
+                "angel_10": "❂",
+                "angel_11": "❁",
+                "angel_12": "☬",
+                "omega_icon": "Ω"
+            }
 
             const embed = new Discord.MessageEmbed();
             embed.setTitle("Skywars Stats");
@@ -72,7 +93,7 @@ exports.run = async (discordClient, hypixelClient, message, args) => {
 
             embed.addField("Experience", stats.skywars_experience, true);
             embed.addField("Heads", stats.heads, true);
-            embed.addField("Time", stats.time_played, true);
+            embed.addField("Time", utils.formatTime(stats.time_played / 60), true);
 
             embed.addField("Shards", stats.shard, true);
             embed.addField("Opals", stats.opals, true);

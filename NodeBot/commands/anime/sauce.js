@@ -6,6 +6,7 @@ const fetch = require("node-fetch");
 const sagiri = require("sagiri");
 const config = require("../../config.json");
 const client = sagiri(config.saucenao_api_key);
+const utils = require("../../utils");
 
 /**
  * @param {Discord.Client} discordClient
@@ -113,8 +114,7 @@ function findSauce(img, method) {
 function getEmbed(results, method, message) {
     var embed = new Discord.MessageEmbed();
     embed.setTitle("Results");
-    embed.setAuthor(message.author.username, message.author.avatarURL(), "");
-
+    embed = utils.getAuthor(message, embed);
     if (method === "trace" || method === "trace.moe" || method === "moe") {
         var res = results.docs;
 
@@ -127,7 +127,7 @@ function getEmbed(results, method, message) {
             var result = res[i - 1];
             embed.addField(
                 result.title_english,
-                `Episode: ${result.episode} | At: ${format(result.at)} | Link: https://anilist.co/anime/${result.anilist_id}/`,
+                `Episode: ${result.episode} | At: ${utils.formatTime(result.at, "s")} | Link: https://anilist.co/anime/${result.anilist_id}/`,
                 false
             );
         }
@@ -149,8 +149,4 @@ function getEmbed(results, method, message) {
     }
 
     return embed;
-}
-
-function format(s) {
-    return (s - (s %= 60)) / 60 + (9 < s ? ":" : ":0") + s;
 }

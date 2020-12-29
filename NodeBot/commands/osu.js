@@ -4,6 +4,7 @@ const {
 } = require('@zikeji/hypixel');
 const config = require('../config.json');
 const fetch = require("node-fetch");
+const utils = require('../utils');
 
 /**
  * @param {Discord.Client} discordClient
@@ -16,7 +17,7 @@ exports.run = (discordClient, hypixelClient, message, args) => {
         .then((data) => {
             var user = data[0];
             var embed = new Discord.MessageEmbed();
-            embed.setAuthor(message.author.username, message.author.avatarURL());
+            embed = utils.getAuthor(message, embed);
             embed.setTitle(user.username);
             embed.setURL(`https://osu.ppy.sh/users/${user.user_id}`);
             embed.setThumbnail(`http://s.ppy.sh/a/${user.user_id}`);

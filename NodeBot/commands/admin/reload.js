@@ -11,6 +11,8 @@ const {
 exports.run = (discordClient, hypixelClient, message, args) => {
   if (message.author.id == "202666531111436288") {
     //if args[1] != null, then run the cmd thats reloaded w/ args being args[1...]
+    // ^ Problem: eval uses message content not args
+
     if (!args || args.length < 1) return message.reply("Must provide a command name to reload.");
     var commandName = args[0];
     if (commandName.startsWith("/")) commandName = commandName.substring(1);
@@ -25,5 +27,9 @@ exports.run = (discordClient, hypixelClient, message, args) => {
     discordClient.commands.set(commandName, props);
 
     message.reply(`The command ${commandName} has been reloaded`);
+
+    if (args[1] != null) {
+      props.run(discordClient, hypixelClient, message, args.slice(1));
+    }
   }
 }

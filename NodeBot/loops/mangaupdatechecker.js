@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const request = require('request');
 const config = require("../config.json");
-
+const utils = require('../utils');
 /**
  * @param {Discord.Client} discordClient 
  * @param {Client} hypixelClient
@@ -14,7 +14,7 @@ exports.run = (discordClient, hypixelClient) => {
 
     for (var i = 0; i < mangas.length; i++) {
         let manga = mangas[i];
-        discordClient.channels.cache.get(config.mangadex_channel).send(getEmbed(manga));
+        utils.getChannelById(config.mangadex_channel).send(getEmbed(manga));
     }
 }
 

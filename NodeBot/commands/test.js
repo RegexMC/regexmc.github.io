@@ -1,5 +1,7 @@
 const Discord = require('discord.js');
-const { Client } = require('@zikeji/hypixel');
+const {
+    Client
+} = require('@zikeji/hypixel');
 const config = require('../config.json');
 
 /**
@@ -8,7 +10,7 @@ const config = require('../config.json');
  * @param {Discord.Message} message
  * @param {String[]} args
  */
- 
 exports.run = (discordClient, hypixelClient, message, args) => {
     // command for testing
+
 }

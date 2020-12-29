@@ -24,7 +24,7 @@ exports.run = (discordClient, hypixelClient, message, args) => {
                 noReturn = true;
             }
 
-            code = code += `function random(min, max) {return Math.floor((Math.random() * max) + min);}`;
+            code = `function random(min, max) {return Math.floor((Math.random() * max) + min);}` + code;
 
             let evaled = eval(code);
 

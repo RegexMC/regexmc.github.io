@@ -2,6 +2,8 @@ const Discord = require('discord.js');
 const {
   Client
 } = require('@zikeji/hypixel');
+const utils = require("../../utils");
+const request = require('request');
 
 /**
  * @param {Discord.Client} discordClient
@@ -117,8 +119,8 @@ exports.run = (discordClient, hypixelClient, message, args) => {
             }
           })
         });
-        animeListCompletedGenresMap = new Map([...animeListCompletedGenresMap.entries()].sort((a, b) => b[1] - a[1]));
-
+        //animeListCompletedGenresMap = new Map([...animeListCompletedGenresMap.entries()].sort((a, b) => b[1] - a[1]));
+        animeListCompletedGenresMap = utils.sortMap(animeListCompletedGenresMap, "values", "desc");
         var user = body.data.User;
 
         var name = user.name;
@@ -159,7 +161,7 @@ exports.run = (discordClient, hypixelClient, message, args) => {
         var profileColor = user.options.profileColor;
 
         var embed = new Discord.MessageEmbed();
-        embed.setAuthor(message.author.username, message.author.avatarURL(), "");
+        embed = utils.getAuthor(message, embed);
         embed.setColor(getColorFromString(profileColor));
         embed.setTitle(name);
         embed.setURL(siteUrl);
@@ -170,7 +172,7 @@ exports.run = (discordClient, hypixelClient, message, args) => {
         embed.addField("List Entries", animeCount + mangaCount, false);
         embed.addField("Anime Watched", animeListCompleted.entries.length, true);
         embed.addField("Eps. Watched", episodesWatched, true);
-        embed.addField("Time Watched", formatTime(timeWatched), true);
+        embed.addField("Time Watched", utils.formatTime(timeWatched), true);
 
         embed.addField("Manga Read", mangaCount, true);
         embed.addField("Chapters Read", chaptersRead, true);
@@ -187,18 +189,6 @@ exports.run = (discordClient, hypixelClient, message, args) => {
       }
     });
   }
-}
-
-function formatTime(time) {
-  var days = Math.floor(time / 24 / 60) + "";
-  var hours = Math.floor(time / 60 % 24) + "";
-  var minutes = Math.floor(time % 60) + "";
-
-  if (days.length == 1) days = "0" + days;
-  if (hours.length == 1) hours = "0" + hours;
-  if (minutes.length == 1) minutes = "0" + minutes;
-
-  return days + ":" + hours + ":" + minutes;
 }
 
 /**
