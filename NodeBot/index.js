@@ -9,7 +9,8 @@ const config = require('./config.json');
 const cron = require('node-cron');
 
 const cache = cacheManager.caching({
-    store: 'memory'
+    store: 'memory',
+    ttl: 5*60
 });
 const hypixelClient = new Client(config.hypixel_api_key, {
     cache: {

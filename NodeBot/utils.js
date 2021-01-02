@@ -4,6 +4,26 @@ const {
 } = require("@zikeji/hypixel");
 
 module.exports = {
+    //probs doesnt work lol, havent tested 
+    /**
+     * Gets the message by id
+     * @param {Discord.Client} discordClient Discord client
+     * @param {Discord.Channel|Number|String} channel Channel to retrieve message ID from (ID or object)
+     * @param {Number|String} messageId Message ID
+     * @returns {Discord.Message} Message with the id
+     */
+    getMessageById: function (discordClient, channel, messageId) {
+        if (channel instanceof Discord.Channel) {
+            return channel.messages.fetch(messageId).then(msg => {
+                return msg;
+            });
+        } else {
+            return this.getChannelById(discordClient, messageId).messages.fetch(messageId).then(msg => {
+                return msg;
+            });
+        }
+    },
+
     /**
      * Gets the channel by id
      * @param {Discord.Client} discordClient Discord client

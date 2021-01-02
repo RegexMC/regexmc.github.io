@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const {
     Client
 } = require('@zikeji/hypixel');
+
 /**
  * @param {Discord.Client} discordClient
  * @param {Client} hypixelClient
@@ -24,7 +25,7 @@ exports.run = (discordClient, hypixelClient, message, args) => {
                 noReturn = true;
             }
 
-            code = `function random(min, max) {return Math.floor((Math.random() * max) + min);}` + code;
+            code = `function random(min, max) {return Math.floor((Math.random() * max) + min);} function fetchMessages(max) {return message.channel.messages.fetch({limit: max})}` + code;
 
             let evaled = eval(code);
 
