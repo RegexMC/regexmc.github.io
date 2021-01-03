@@ -2,8 +2,83 @@ const Discord = require("discord.js");
 const {
     Client
 } = require("@zikeji/hypixel");
+const {
+    Player
+} = require("@zikeji/hypixel/dist/methods/player");
 
 module.exports = {
+    /**
+     * TODO: add 0's to the date
+     * Formats epoch time as `YYYY/MM/dd hh:mm`
+     * @param {String|Number} time Epoch time
+     * @returns {String} Formatted time
+     */
+    formatEpochTime: function (time) {
+        var date = new Date(time);
+        return `${date.getUTCFullYear()}/${date.getUTCMonth()+1}/${date.getUTCDate()} ${(date.getUTCHours()+"").length==1 ? "0"+ date.getUTCHours(): date.getUTCHours()}:${(date.getUTCMinutes()+"").length===1 ? "0"+ date.getUTCMinutes(): date.getUTCMinutes()}`
+    },
+
+    /**
+     * Rounds `number` down to the greatest integer less than or equal to `number`
+     * @param {Number|String} number Number to round 
+     * @returns {Number} Rounded number
+     */
+    roundDown: function (number) {
+        return Math.floor(number);
+    },
+
+    /**
+     * Rounds `number` to `places` decimal places
+     * @param {Number|String} number Number to round 
+     * @param {Number|String} places Places to round to
+     * @returns {Number} Rounded number
+     */
+    roundTo: function (number, places) {
+        return number.toFixed(places);
+    },
+
+    /**
+     * Rounds `number` up to the lowest integer great than or equal to `number`
+     * @param {Number|String} number Number to round
+     * @returns {Number} Rounded number
+     */
+    roundUp: function (number) {
+        return Math.ceil(number);
+    },
+
+    /**
+     * Gets network level from their network exp
+     * @param {Number|String} networkExp 
+     * @returns {Number} Network Level
+     */
+    getHypixelLevel: function (networkExp) {
+        return (Math.sqrt(networkExp + 15312.5) - 125 / Math.sqrt(2)) / (25 * Math.sqrt(2));
+    },
+
+    /**
+     * Gets player rank
+     * @param {Player} player
+     * @returns {"null"|"VIP"|"VIP_PLUS"|"MVP_PLUS"|"MVP_PLUS_PLUS"} player rank
+     */
+    getPlayerRank: function (player) {
+        let playerRank;
+        if (player.rank === 'NORMAL') {
+            playerRank = player.newPackageRank || packageRank || null;
+        } else {
+            playerRank = player.rank || player.newPackageRank || player.packageRank || null;
+        }
+
+        if (playerRank === 'MVP_PLUS' && player.monthlyPackageRank === 'SUPERSTAR') {
+            playerRank = 'MVP_PLUS_PLUS';
+        }
+
+        if (player.rank === 'NONE') {
+            playerRank = null;
+        }
+        return playerRank;
+    },
+
+
     //probs doesnt work lol, havent tested 
     /**
      * Gets the message by id
