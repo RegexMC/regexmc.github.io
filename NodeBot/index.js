@@ -10,8 +10,10 @@ const cron = require('node-cron');
 
 const cache = cacheManager.caching({
     store: 'memory',
-    ttl: 5*60
+    ttl: 5 * 60,
+    max: 500
 });
+
 const hypixelClient = new Client(config.hypixel_api_key, {
     cache: {
         get(key) {
@@ -31,6 +33,7 @@ const hypixelClient = new Client(config.hypixel_api_key, {
         }
     }
 });
+
 const discordClient = new Discord.Client();
 
 discordClient.login(config.discord_token);
@@ -41,6 +44,13 @@ discordClient.on('messageUpdate', (oldMessage, newMessage) => {
     if (oldMessage.author.id == "202666531111436288" && oldMessage.content.startsWith(">eval ") && newMessage.content.startsWith(">eval ")) {
         let props = require(`./commands/admin/eval.js`);
         props.run(discordClient, hypixelClient, newMessage, ["true"]);
+    }
+});
+
+discordClient.on('message', message => {
+    if (message.content === ">clearcache" && message.author.id == "202666531111436288") {
+        cache.reset();
+        message.reply("Cleared Cache");
     }
 });
 

@@ -72,6 +72,7 @@ exports.run = async (discordClient, hypixelClient, message, args) => {
                 embed.setURL("https://plancke.io/hypixel/player/stats/" + playerName);
                 embed = utils.getAuthor(message, embed);
                 embed.setThumbnail("https://crafatar.com/avatars/" + id);
+                embed.setColor(getRankColor(rank));
                 embed.addField("Network Exp", networkExp, true);
                 embed.addField("Level", utils.roundTo(utils.getHypixelLevel(networkExp), 2), true);
                 embed.addField("Karma", karma, true);
@@ -86,6 +87,7 @@ exports.run = async (discordClient, hypixelClient, message, args) => {
                 } else {
                     embed.addField("Last Played", `${mostRecentGame}`, false);
                 }
+                // ^ make it so no map if in SB, make it so theres no undefineds, etc.
 
                 var end = new Date();
                 message.channel.send("Took " + (end - start) + "ms", {
@@ -93,5 +95,13 @@ exports.run = async (discordClient, hypixelClient, message, args) => {
                 });
             });
         });
+    }
+}
+
+function getRankColor(rank) {
+    switch(rank) {
+        case "[MVP++]": return 16755200;
+        case "[MVP+]","[MVP]": return 5636095;
+        case "[VIP+]","[VIP]": return 5635925; 
     }
 }

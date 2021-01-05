@@ -11,6 +11,5 @@ const config = require('../config.json');
  * @param {String[]} args
  */
 exports.run = (discordClient, hypixelClient, message, args) => {
-    // command for testing
-
+    
 }

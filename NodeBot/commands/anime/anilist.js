@@ -11,7 +11,6 @@ const request = require('request');
  * @param {Discord.Message} message
  * @param {String[]} args
  */
-
 exports.run = (discordClient, hypixelClient, message, args) => {
 
   if (args.length != 0) {
@@ -119,7 +118,6 @@ exports.run = (discordClient, hypixelClient, message, args) => {
             }
           })
         });
-        //animeListCompletedGenresMap = new Map([...animeListCompletedGenresMap.entries()].sort((a, b) => b[1] - a[1]));
         animeListCompletedGenresMap = utils.sortMap(animeListCompletedGenresMap, "values", "desc");
         var user = body.data.User;
 
