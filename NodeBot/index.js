@@ -9,6 +9,7 @@ const config = require('./config.json');
 const cron = require('node-cron');
 const express = require('express');
 const path = require('path');
+const https = require('https');
 
 const cache = cacheManager.caching({
     store: 'memory',
@@ -113,7 +114,14 @@ function loadLoops(path) {
     })
 }
 
+
+var options = {
+    key: fs.readFileSync('./ssl/uuwuu.xyz.key'),
+    cert: fs.readFileSync('./ssl/uuwuu.xyz.pem'),
+};
+
 const app = express();
+
 var cookieParser = require('cookie-parser');
 app.set('view engine', 'ejs');
 app.use(cookieParser());
@@ -141,9 +149,13 @@ app.get('/commands', (req, res) => {
     res.sendFile(path.join(__dirname, './public/commands.html'));
 });
 
-app.listen(80, () => {
+https.createServer(options, app).listen(80, () => {
     console.info('Running on port 80');
 });
+
+/*app.listen(80, () => {
+    console.info('Running on port 80');
+});*/
 
 app.use('/public/api/discord/', require('./public/api/discord'));
 app.use('/public/api/anilist/', require('./public/api/anilist'));
