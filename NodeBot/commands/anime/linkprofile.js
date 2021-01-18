@@ -21,7 +21,7 @@ exports.run = async (discordClient, hypixelClient, message, args) => {
     var user = await userCollection.findOne(query);
 
     if (user) {
-        message.reply("You are currently linked to https://anilist.com/user/" + user.anilist_id + "\nTo change what anilist account you are linked to, clear your cookie cache and re-login on http://uuwuu.xyz");
+        message.reply("You are currently linked to https://anilist.com/user/" + user.anilist_id + "\nTo change what anilist account you are linked to, open http://uuwuu.xyz/public/clearcookies and then re-login.");
     } else {
         message.reply("Link your anilist account at http://uuwuu.xyz");
     }
