@@ -4,16 +4,8 @@ const router = express.Router();
 const axios = require('axios');
 const path = require('path');
 
-const catchAsync = fn => (
-    (req, res, next) => {
-        const routePromise = fn(req, res, next);
-        if (routePromise.catch) {
-            routePromise.catch(err => next(err));
-        }
-    }
-);
 
-router.get('/', catchAsync(async (req, res) => {
+router.get('/', async function (req, res) {
     const discord_id = req.cookies.discord_id;
     const discord_username = req.cookies.discord_username;
     const discord_token = req.cookies.discord_token;
@@ -24,97 +16,84 @@ router.get('/', catchAsync(async (req, res) => {
 
     const DiscordOauth2 = require("discord-oauth2");
     const oauth = new DiscordOauth2();
-    oauth.getUser(discord_token).then(response => {
-        const discord_id_new = response.id;
-        const discord_username_new = response.username + "#" + response.discriminator;
 
-        if (discord_id == discord_id_new && discord_username == discord_username_new) {
-            const userOptions = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + anilist_token
-                }
+    const discordUser = await oauth.getUser(discord_token)
+    const discord_id_new = discordUser.id;
+    const discord_username_new = discordUser.username + "#" + discordUser.discriminator;
+
+    if (discord_id == discord_id_new && discord_username == discord_username_new) {
+        const userOptions = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + anilist_token
+            }
+        }
+
+        var anilistUser = await axios.post("https://graphql.anilist.co", {
+            query: `mutation {UpdateUser {id name}}`
+        }, userOptions);
+        anilistUser = anilistUser.data.data.UpdateUser;
+
+        const anilist_id_new = anilistUser.id;
+        const anilist_username_new = anilistUser.name;
+
+        if (anilist_id == anilist_id_new && anilist_username == anilist_username_new) {
+            res.cookie('discord_token', '', {
+                maxAge: 0
+            });
+            res.cookie('anilist_token', '', {
+                maxAge: 0
+            });
+            res.cookie("linked", "1", {
+                httpOnly: true
+            });
+
+            var mongoUtil = require("../../mongoUtil");
+            var db = mongoUtil.getDb();
+            var userCollection = db.collection("users");
+
+            const query = {
+                discord_id: Number(discord_id)
             }
 
-            axios.post("https://graphql.anilist.co", {
-                query: `mutation {UpdateUser {id name}}`
-            }, userOptions).then((response) => {
-                var user = response.data.data.UpdateUser;
+            var dataBaseUser = await userCollection.findOne(query);
 
-                const anilist_id_new = user.id;
-                const anilist_username_new = user.name;
+            var newUser = {
+                discord_id: Number(discord_id),
+                anilist_id: Number(anilist_id),
+                minecraft_uuid: ""
+            }
 
-                if (anilist_id == anilist_id_new && anilist_username == anilist_username_new) {
-                    res.cookie('discord_token', '', {
-                        maxAge: 0
-                    });
-                    res.cookie('anilist_token', '', {
-                        maxAge: 0
-                    });
-                    res.cookie("linked", "1", {
-                        httpOnly: true
-                    });
+            console.log(dataBaseUser);
+            console.log(newUser);
 
-                    var mongoUtil = require("../../mongoUtil");
-                    var db = mongoUtil.getDb();
-                    var userCollection = db.collection("users");
-
-                    const query = {
-                        discord_id: Number(discord_id)
+            if (!dataBaseUser) {
+                userCollection.insertOne(newUser, function (error, response_) {
+                    if (error) throw error;
+                    console.log("Inserted user");
+                });
+            } else {
+                newUser = {
+                    $set: {
+                        discord_id: Number(discord_id),
+                        anilist_id: Number(anilist_id),
+                        minecraft_uuid: ""
                     }
-
-                    var user = userCollection.findOne(query);
-
-                    var newUser = {
-                        $set: {
-                            discord_id: Number(discord_id),
-                            anilist_id: Number(anilist_id),
-                            minecraft_uuid: ""
-                        }
-                    }
-
-                    if (!user) {
-                        userCollection.insertOne(newUser, function (error, response_) {
-                            if (error) throw errror;
-                            console.log("Inserted user");
-                            //discordClient.channels.cache.get("761205404251586591").sendMessage("Linked");
-                        });
-                    } else {
-                        userCollection.updateOne(query, newUser, function (error, response_) {
-                            if (error) throw errror;
-                            console.log("Updated user");
-                            //discordClient.channels.cache.get("761205404251586591").sendMessage("Linked");
-                        });
-                    }
-
-                    res.redirect(`/public/api/link/success`);
                 }
-            }).catch((err) => {
-                if (err.response) {
-                    console.log("API Error", err.response.data);
-                } else {
-                    console.log("Request Error", err.message);
-                }
-                res.sendFile(path.join(__dirname, '../error.html'));
-                return;
-            });
-        }
-    }).catch((err) => {
-        if (err.response) {
-            console.log("API Error", err.response.data);
-        } else {
-            console.log("Request Error", err.message);
-        }
-        res.sendFile(path.join(__dirname, '../error.html'));
-        return;
-    });
-}));
+                userCollection.updateOne(query, newUser, function (error, response_) {
+                    if (error) throw error;
+                    console.log("Updated user");
+                });
+            }
 
-router.get("/success", catchAsync(async (req, res) => {
-    console.log(this.test);
+            res.redirect(`/public/api/link/success`);
+        }
+    }
+});
+router.get("/success", async function (req, res) {
     res.sendFile(path.join(__dirname, '../success.html'));
-}));
+});
 
 module.exports = router;
 //todo: have index.js pass the discord obj here. when this is run use the disc object to send msg saying linked. temp store channel and guild id somewhere?

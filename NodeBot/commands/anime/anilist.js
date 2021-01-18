@@ -3,6 +3,7 @@ const {
   Client
 } = require('@zikeji/hypixel');
 const utils = require('../../utils');
+const request = require('request');
 
 /**
  * @param {Discord.Client} discordClient
@@ -29,7 +30,7 @@ exports.run = async (discordClient, hypixelClient, message, args) => {
     if (user) {
       id = user.anilist_id;
     } else {
-      message.reply("Please enter a username or link your anilist profile using `>linkprofile <username>`")
+      message.reply("Please enter a username or link your anilist profile using `>linkprofile`")
     }
   }
 

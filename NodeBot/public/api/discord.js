@@ -16,6 +16,7 @@ const catchAsync = fn => (
 
 router.get('/login', (req, res) => {
     res.redirect("https://discord.com/api/oauth2/authorize?client_id=778936290090942514&redirect_uri=http%3A%2F%2Fuuwuu.xyz%2Fpublic%2Fapi%2Fdiscord%2Fcallback&response_type=code&scope=identify");
+//    res.redirect("https://discord.com/api/oauth2/authorize?client_id=778936290090942514&redirect_uri=http%3A%2F%2Flocalhost%2Fpublic%2Fapi%2Fdiscord%2Fcallback&response_type=code&scope=identify");
 });
 
 /**
@@ -31,7 +32,7 @@ router.get('/callback', catchAsync(async (req, res) => {
     exchangeParams.append("grant_type", "authorization_code");
     exchangeParams.append("code", req.query.code);
     exchangeParams.append("redirect_uri", "http://uuwuu.xyz/public/api/discord/callback");
-
+   //exchangeParams.append("redirect_uri", "http://localhost/public/api/discord/callback");
     const exchangeOptions = {
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",

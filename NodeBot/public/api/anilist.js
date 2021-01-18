@@ -28,6 +28,7 @@ router.get('/callback', catchAsync(async (req, res) => {
     params.append("client_secret", config.anilist_secret);
     params.append("code", req.query.code);
     params.append("redirect_uri", "http://uuwuu.xyz/public/api/anilist/callback");
+    //params.append("redirect_uri", "http://localhost/public/api/anilist/callback");
 
     const options = {
         headers: {
