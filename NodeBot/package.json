@@ -21,7 +21,6 @@
     "enmap": "^5.8.2",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
-    "http": "0.0.1-security",
     "https": "^1.0.0",
     "js-yaml": "^3.14.1",
     "mongodb": "^3.6.3",
