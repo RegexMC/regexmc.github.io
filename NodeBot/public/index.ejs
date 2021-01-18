@@ -1,0 +1,128 @@
+<html>
+  <head>
+    <title>uuwuuu Discord Bot</title>
+    <!-- Can't get stylesheet to link so pasting in every file... wish I had a few more brain cells -->
+    <style>
+        body {
+          background-color: #ffb5eb;
+          color: #fff;
+          font-family: "Helvetica", "Arial", sans-sefir;
+          font-size: 20px;
+        }
+
+        .discContainer {
+          display: flex;
+          width: 100%;
+          padding: 40px 0;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .discContainer a {
+          background: #7289da;
+          color: #fff;
+          padding: 0 20px;
+          line-height: 35px;
+          display: block;
+          text-decoration: none;
+          border-radius: 3px;
+        }
+
+        .aniContainer {
+          display: flex;
+          width: 100%;
+          padding: 40px 0;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .aniContainer a {
+          background: #0b1622;
+          color: #fff;
+          padding: 0 20px;
+          line-height: 35px;
+          font-size: 20px;
+          display: block;
+          text-decoration: none;
+          border-radius: 3px;
+        }
+
+        ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          background-color: #fff;
+        }
+
+        li {
+          float: left;
+        }
+
+        li a {
+          display: block;
+          color: black;
+          text-align: center;
+          padding: 22px 16px;
+          text-decoration: none;
+        }
+
+        li a:hover:not(.active) {
+          background-color: #c8ffff;
+        }
+
+        .active {
+          background-color: #4caf50;
+        }
+    </style>
+  </head>
+
+  <body>
+    <ul>
+      <li>
+        <a href="./"><img src="./static/icon.png" /></a>
+      </li>
+      <li><a href="commands">Commands</a></li>
+      <li><a href="about">About</a></li>
+      <li><a href="invite">Invite</a></li>
+    </ul>
+
+    <% if (linked == 0 || !linked) { %>
+      <!-- Link not confirmed -->
+      <% if (discord_username && anilist_username) { %>
+        <!-- Signed into both discord and anilist -->
+        <h1>Successfully signed into both your Discord account and your Anilist account</h1>
+        <h3>
+          Discord: <%= discord_username %>
+        </h3>
+        <h3>
+          Anilist: <%= anilist_username %>
+        </h3>
+  
+        <h2>
+          <a href="/public/api/link">Confirm to link these two accounts</a>
+        </h2>
+        
+      <% } else if (discord_username) { %>
+        <!-- Signed in with discord but not anilist -->
+        <h3> Logged in with discord as <%= discord_username %>
+        <br>
+        <div class="aniContainer">
+            <a href="/public/api/anilist/login">Login with Anilist</a>
+        </div>
+      <% } else { %>
+        <!-- Not signed in with any accounts -->
+        <div class="discContainer">
+          <a href="/public/api/discord/login">Login with Discord<a>
+        </div>
+      <% } %>
+    <% } else { %>
+      <h3>
+        Discord: <%= discord_username %>
+      </h3>
+      <h3>
+        Anilist: <%= anilist_username %>
+      </h3>
+    <% } %>
+  </body>
+</html>

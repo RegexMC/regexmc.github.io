@@ -3,6 +3,7 @@ const {
     Client
 } = require('@zikeji/hypixel');
 const config = require('../config.json');
+const request = require('request');
 
 /**
  * @param {Discord.Client} discordClient
@@ -10,6 +11,6 @@ const config = require('../config.json');
  * @param {Discord.Message} message
  * @param {String[]} args
  */
-exports.run = (discordClient, hypixelClient, message, args) => {
-    
+exports.run = async (discordClient, hypixelClient, message, args) => {
+
 }

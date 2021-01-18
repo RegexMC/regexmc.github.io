@@ -20,3 +20,4 @@ NodeBot/config.json
 NodeBot/package-lock.json
 NodeBot/node_modules
 NodeBot/cache
+NodeBot/data

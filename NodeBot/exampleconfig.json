@@ -1,15 +1,17 @@
 {
     "discord_token": "",
+    "discord_secret": "",
     "hypixel_api_key": "",
     "saucenao_api_key": "",
     "anilist_id": "",
     "anilist_secret": "",
     "osu_api_key": "",
+    "mongo_password": "",
     "admins": [
         "",
         ""
     ],
-    "mangadex_rss": "https://mangadex.org/rss/*******",
+    "mangadex_rss": "",
     "mangadex_manga": [
         "",
         "",

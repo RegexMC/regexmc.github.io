@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const { Client } = require("@zikeji/hypixel");
+const { Client } = require('@zikeji/hypixel');
 
 /**
  * @param {Discord.Client} discordClient

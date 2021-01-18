@@ -1,12 +1,12 @@
-const Discord = require("discord.js");
+const Discord = require('discord.js');
 const {
     Client
-} = require("@zikeji/hypixel");
-const fetch = require("node-fetch");
-const sagiri = require("sagiri");
-const config = require("../../config.json");
+} = require('@zikeji/hypixel');
+const fetch = require('node-fetch');
+const sagiri = require('sagiri');
+const config = require('../../config.json');
 const client = sagiri(config.saucenao_api_key);
-const utils = require("../../utils");
+const utils = require('../../utils');
 
 /**
  * @param {Discord.Client} discordClient

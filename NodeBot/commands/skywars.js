@@ -3,8 +3,8 @@ const {
     Client
 } = require('@zikeji/hypixel');
 const fetch = require('node-fetch');
-const usernamesFile = './cache/usernames.json';
-const usernames = require('../cache/usernames.json');
+const usernamesFile = './data/hypixel/usernames.json';
+const usernames = require('../data/hypixel/usernames.json');
 const fs = require('fs');
 const utils = require('../utils');
 

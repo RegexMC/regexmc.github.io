@@ -3,7 +3,7 @@ const {
     Client
 } = require('@zikeji/hypixel');
 const config = require('../config.json');
-const fetch = require("node-fetch");
+const fetch = require('node-fetch');
 const utils = require('../utils');
 
 /**

@@ -1,18 +1,28 @@
-const cacheManager = require("cache-manager");
+const cacheManager = require('cache-manager');
 const {
     Client
-} = require("@zikeji/hypixel");
+} = require('@zikeji/hypixel');
 const Discord = require('discord.js');
 const fs = require('fs');
-const Enmap = require("enmap");
+const Enmap = require('enmap');
 const config = require('./config.json');
 const cron = require('node-cron');
+const express = require('express');
+const path = require('path');
 
 const cache = cacheManager.caching({
     store: 'memory',
     ttl: 5 * 60,
     max: 500
 });
+
+var mongoUtil = require('./mongoUtil');
+
+mongoUtil.connectToServer(function (err, client) {
+    if (err) console.log(err);
+    console.log("Connected to database");
+});
+
 
 const hypixelClient = new Client(config.hypixel_api_key, {
     cache: {
@@ -102,3 +112,55 @@ function loadLoops(path) {
         }
     })
 }
+
+const app = express();
+var cookieParser = require('cookie-parser');
+app.set('view engine', 'ejs');
+app.use(cookieParser());
+app.use('/static', express.static(path.join(__dirname, 'public/static')));
+
+// TODO: Add page not found error. (Using * causes a few not to work for some reason)
+
+app.get('/', (req, res) => {
+    res.status(200).render(path.join(__dirname, './public/index.ejs'), {
+        discord_username: req.cookies.discord_username,
+        discord_id: req.cookies.discord_id,
+        discord_token: req.cookies.discord_token,
+        anilist_username: req.cookies.anilist_username,
+        anilist_id: req.cookies.anilist_id,
+        anilist_token: req.cookies.anilist_token,
+        linked: req.cookies.linked
+    });
+});
+
+app.get('/about', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/about.html'));
+});
+
+app.get('/commands', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/commands.html'));
+});
+
+app.listen(80, () => {
+    console.info('Running on port 80');
+});
+
+app.use('/public/api/discord/', require('./public/api/discord'));
+app.use('/public/api/anilist/', require('./public/api/anilist'));
+app.use('/public/api/link/', require('./public/api/link'));
+app.use('/public/clearcookies/', require('./public/clearcookies'));
+
+app.use((err, req, res, next) => {
+    switch (err.message) {
+        case 'NoCodeProvided':
+            return res.status(400).send({
+                status: 'ERROR',
+                error: err.message,
+            });
+        default:
+            return res.status(500).send({
+                status: 'ERROR',
+                error: err.message,
+            });
+    }
+});

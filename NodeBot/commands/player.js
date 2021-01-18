@@ -7,8 +7,8 @@ const {
     request
 } = require('http');
 const fetch = require('node-fetch');
-const usernamesFile = './cache/usernames.json';
-const usernames = require('../cache/usernames.json');
+const usernamesFile = './data/hypixel/usernames.json';
+const usernames = require('../data/hypixel/usernames.json');
 const fs = require('fs');
 const utils = require('../utils');
 
@@ -99,9 +99,12 @@ exports.run = async (discordClient, hypixelClient, message, args) => {
 }
 
 function getRankColor(rank) {
-    switch(rank) {
-        case "[MVP++]": return 16755200;
-        case "[MVP+]","[MVP]": return 5636095;
-        case "[VIP+]","[VIP]": return 5635925; 
+    switch (rank) {
+        case "[MVP++]":
+            return 16755200;
+        case "[MVP+]", "[MVP]":
+            return 5636095;
+        case "[VIP+]", "[VIP]":
+            return 5635925;
     }
 }

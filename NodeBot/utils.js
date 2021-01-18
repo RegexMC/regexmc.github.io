@@ -1,10 +1,10 @@
-const Discord = require("discord.js");
+const Discord = require('discord.js');
 const {
     Client
-} = require("@zikeji/hypixel");
+} = require('@zikeji/hypixel');
 const {
     Player
-} = require("@zikeji/hypixel/dist/methods/player");
+} = require('@zikeji/hypixel/dist/methods/player');
 
 module.exports = {
     /**
