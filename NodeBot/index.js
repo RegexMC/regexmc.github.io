@@ -23,7 +23,6 @@ mongoUtil.connectToServer(function (err, client) {
     console.log("Connected to database");
 });
 
-
 const hypixelClient = new Client(config.hypixel_api_key, {
     cache: {
         get(key) {

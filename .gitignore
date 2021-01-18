@@ -21,3 +21,4 @@ NodeBot/package-lock.json
 NodeBot/node_modules
 NodeBot/cache
 NodeBot/data
+NodeBot/ssl
