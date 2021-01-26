@@ -116,12 +116,15 @@ module.exports = {
 	/**
 	 * Gets user settings by discord id
 	 * @param {String} id
+	 * @param {Discord.Client} [discordClient]
 	 * @returns {Promise<UserSettings>}
 	 */
-	userSettings: async function (id) {
+	userSettings: async function (id, discordClient) {
 		if (!_db) throw new Error("DatabaseNotInitialized");
-		if (discordClient.userSettings.has(id)) {
-			return discordClient.userSettings.get(id);
+		if (discordClient) {
+			if (discordClient.userSettings.has(id)) {
+				return discordClient.userSettings.get(id);
+			}
 		}
 		return _db.collection("users").findOne({
 			discord_id: id

@@ -43,7 +43,7 @@ router.get("/callback", async function (req, res) {
 	const exchangeParams = new URLSearchParams();
 	exchangeParams.append("grant_type", "authorization_code");
 	exchangeParams.append("code", req.query.code);
-	if (process.env.DEV) {
+	if (process.env.DEV == "true") {
 		exchangeParams.append("redirect_uri", "http://localhost/public/api/discord/callback");
 	} else {
 		exchangeParams.append("redirect_uri", "http://uuwuu.xyz/public/api/discord/callback");
@@ -53,7 +53,9 @@ router.get("/callback", async function (req, res) {
 		headers: {
 			"Content-Type": "application/x-www-form-urlencoded",
 			Authorization: `Basic ${btoa(
-				`${process.env.DEV ? "802515790233731072" : "778936290090942514"}:${process.env.DEV ? config.discord_dev_secret : config.discord_secret}`
+				`${process.env.DEV == "true" ? "802515790233731072" : "778936290090942514"}:${
+					process.env.DEV == "true" ? config.discord_dev_secret : config.discord_secret
+				}`
 			)}`
 		}
 	};

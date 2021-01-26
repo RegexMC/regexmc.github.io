@@ -25,7 +25,7 @@ router.get("/unlink", async function (req, res) {
 });
 
 router.get("/login", (req, res) => {
-	if (process.env.DEV) {
+	if (process.env.DEV == "true") {
 		res.redirect(
 			"https://osu.ppy.sh/oauth/authorize?client_id=4885&redirect_uri=http%3A%2F%2Flocalhost%2Fpublic%2Fapi%2Fosu%2Fcallback&response_type=code&scope=identify"
 		);
@@ -37,7 +37,7 @@ router.get("/login", (req, res) => {
 });
 
 router.get("/callback", async function (req, res) {
-	var dev = process.env.DEV;
+	var dev = process.env.DEV == "true";
 	var clientId = dev ? 4885 : 4884;
 	var clientSecret = dev ? config.osu_dev_secret : config.osu_secret;
 	var redirectUri = dev ? "http://localhost/public/api/osu/callback" : "http://uuwuu.xyz/public/api/osu/callback";
