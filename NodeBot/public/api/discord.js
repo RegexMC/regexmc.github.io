@@ -22,7 +22,7 @@ router.get("/logout", async function (req, res) {
 });
 
 router.get("/login", (req, res) => {
-	if (process.env.DEV) {
+	if (process.env.DEV == "true") {
 		res.redirect(
 			"https://discord.com/api/oauth2/authorize?client_id=802515790233731072&redirect_uri=http%3A%2F%2Flocalhost%2Fpublic%2Fapi%2Fdiscord%2Fcallback&response_type=code&scope=identify"
 		);

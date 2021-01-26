@@ -25,7 +25,7 @@ router.get("/unlink", async function (req, res) {
 });
 
 router.get("/login", (req, res) => {
-	if (process.env.DEV) {
+	if (process.env.DEV == "true") {
 		res.redirect(
 			"https://anilist.co/api/v2/oauth/authorize?client_id=4766&redirect_uri=http%3A%2F%2Flocalhost%2Fpublic%2Fapi%2Fanilist%2Fcallback&response_type=code"
 		);
@@ -41,7 +41,7 @@ router.get("/login", (req, res) => {
  */
 router.get("/callback", async function (req, res) {
 	if (!req.query.code) throw new Error("NoCodeProvided");
-	var dev = process.env.DEV;
+	var dev = process.env.DEV == "true";
 	var clientId = dev ? 4766 : 4221;
 	var clientSecret = dev ? config.anilist_dev_secret : config.anilist_secret;
 	var redirectUri = dev ? "http://localhost/public/api/anilist/callback" : "http://uuwuu.xyz/public/api/anilist/callback";

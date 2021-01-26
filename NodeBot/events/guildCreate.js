@@ -8,7 +8,7 @@ const mongoUtil = require("../mongoUtil");
 module.exports = (discordClient, guild) => {
 	if (!discordClient.guildSettings.has(guild.id)) {
 		// this will return true if the bot left and joined the guild in the same session
-		mongoUtil.guildSettings(guild.id).then((guildSettings) => {
+		mongoUtil.guildSettings(guild.id, discordClient).then((guildSettings) => {
 			// this will return a guildSettings object if the bot was kicked when it was offline or in a different session, and already has settings defined
 			if (!guildSettings) {
 				var guildSettings = {

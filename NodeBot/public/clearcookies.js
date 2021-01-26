@@ -18,7 +18,7 @@ router.get(
 				maxAge: 0
 			});
 		});
-		if (process.env.DEV) {
+		if (process.env.DEV == "true") {
 			res.redirect("http://localhost/");
 		} else {
 			res.redirect("http://uuwuu.xyz/");

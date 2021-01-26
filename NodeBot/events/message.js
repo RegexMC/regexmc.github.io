@@ -26,7 +26,7 @@ module.exports = async (discordClient, hypixelClient, message) => {
 	var guild_settings;
 
 	if (!discordClient.guildSettings.has(guildId)) {
-		var guildSettings = await mongoUtil.guildSettings(guildId);
+		var guildSettings = await mongoUtil.guildSettings(guildId, discordClient);
 
 		if (guildSettings) {
 			guild_settings = guildSettings.settings;

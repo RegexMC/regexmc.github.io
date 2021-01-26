@@ -41,7 +41,7 @@ mongoUtil.connectToServer(function (err, client) {
 		}
 	});
 
-	var devEnv = process.env.DEV;
+	var devEnv = process.env.DEV == "true";
 
 	const discordClient = new Discord.Client();
 
