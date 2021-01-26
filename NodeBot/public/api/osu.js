@@ -8,18 +8,18 @@ const mongoUtil = require("../../mongoUtil");
 const oauth = new DiscordOauth2();
 
 router.get("/unlink", async function (req, res) {
-	res.cookie("anilist_username", "", {
+	res.cookie("osu_username", "", {
 		maxAge: 0
 	});
-	res.cookie("anilist_id", "", {
+	res.cookie("osu_id", "", {
 		maxAge: 0
 	});
-	res.cookie("anilist_token", "", {
+	res.cookie("osu_token", "", {
 		maxAge: 0
 	});
 	var userSettings = await mongoUtil.userSettings(req.cookies.discord_id);
-	userSettings.anilist_id = "";
-	userSettings.anilist_username = "";
+	userSettings.osu_username = "";
+	userSettings.osu_id = "";
 	mongoUtil.updateUser(req.cookies.discord_id, userSettings);
 	res.redirect("/");
 });
@@ -27,24 +27,20 @@ router.get("/unlink", async function (req, res) {
 router.get("/login", (req, res) => {
 	if (process.env.DEV) {
 		res.redirect(
-			"https://anilist.co/api/v2/oauth/authorize?client_id=4766&redirect_uri=http%3A%2F%2Flocalhost%2Fpublic%2Fapi%2Fanilist%2Fcallback&response_type=code"
+			"https://osu.ppy.sh/oauth/authorize?client_id=4885&redirect_uri=http%3A%2F%2Flocalhost%2Fpublic%2Fapi%2Fosu%2Fcallback&response_type=code&scope=identify"
 		);
 	} else {
 		res.redirect(
-			"https://anilist.co/api/v2/oauth/authorize?client_id=4221&redirect_uri=http%3A%2F%2Fuuwuu.xyz%2Fpublic%2Fapi%2Fanilist%2Fcallback&response_type=code"
+			"https://osu.ppy.sh/oauth/authorize?client_id=4885&redirect_uri=http%3A%2F%2Fuuwuu.xyz%2Fpublic%2Fapi%2Fosu%2Fcallback&response_type=code&scope=identify"
 		);
 	}
 });
 
-/**
- * Credit to MYNAMERYAN - wouldn't have got the requests working w/o him
- */
 router.get("/callback", async function (req, res) {
-	if (!req.query.code) throw new Error("NoCodeProvided");
 	var dev = process.env.DEV;
-	var clientId = dev ? 4766 : 4221;
-	var clientSecret = dev ? config.anilist_dev_secret : config.anilist_secret;
-	var redirectUri = dev ? "http://localhost/public/api/anilist/callback" : "http://uuwuu.xyz/public/api/anilist/callback";
+	var clientId = dev ? 4885 : 4884;
+	var clientSecret = dev ? config.osu_dev_secret : config.osu_secret;
+	var redirectUri = dev ? "http://localhost/public/api/osu/callback" : "http://uuwuu.xyz/public/api/osu/callback";
 
 	const params = new URLSearchParams();
 	params.append("grant_type", "authorization_code");
@@ -60,7 +56,7 @@ router.get("/callback", async function (req, res) {
 		}
 	};
 
-	var tokenRequest = await axios.post("https://anilist.co/api/v2/oauth/token", params, options);
+	var tokenRequest = await axios.post("https://osu.ppy.sh/oauth/token", params, options);
 
 	var token = tokenRequest.data.access_token;
 
@@ -72,18 +68,17 @@ router.get("/callback", async function (req, res) {
 		}
 	};
 
-	var userInfoRequest = await axios.post("https://graphql.anilist.co", { query: `mutation {UpdateUser {id name}}` }, userOptions);
-	var user = userInfoRequest.data.data.UpdateUser;
+	var userInfoRequest = await axios.get("https://osu.ppy.sh/api/v2/me/", userOptions);
 
-	res.cookie("anilist_token", token, {
+	res.cookie("osu_token", token, {
 		httpOnly: true
 	});
 
-	res.cookie("anilist_username", user.name, {
+	res.cookie("osu_username", userInfoRequest.data.username, {
 		httpOnly: true
 	});
 
-	res.cookie("anilist_id", user.id, {
+	res.cookie("osu_id", userInfoRequest.data.id, {
 		httpOnly: true
 	});
 
@@ -93,9 +88,8 @@ router.get("/callback", async function (req, res) {
 
 	if (discordId === cookieDiscordId) {
 		var userSettings = await mongoUtil.userSettings(cookieDiscordId);
-		userSettings.anilist_username = user.name;
-		userSettings.anilist_id = user.id;
-
+		userSettings.osu_id = userInfoRequest.data.id;
+		userSettings.osu_username = userInfoRequest.data.username;
 		mongoUtil.updateUser(cookieDiscordId, userSettings);
 	}
 

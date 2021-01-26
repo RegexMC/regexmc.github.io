@@ -22,3 +22,5 @@ NodeBot/node_modules
 NodeBot/cache
 NodeBot/data
 NodeBot/ssl
+NodeBot/commands/test.js
+NodeBot/TODO

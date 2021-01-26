@@ -1,5 +1,5 @@
-const Discord = require('discord.js');
-const { Client } = require('@zikeji/hypixel');
+const Discord = require("discord.js");
+const { Client } = require("@zikeji/hypixel");
 
 /**
  * @param {Discord.Client} discordClient
@@ -7,6 +7,6 @@ const { Client } = require('@zikeji/hypixel');
  * @param {Discord.Message} message
  */
 module.exports = (discordClient, hypixelClient, message) => {
-    console.log("Logged in as " + discordClient.user.username);
-    discordClient.user.setActivity("regex.rest | >help");
-}
+	console.log("Logged in as " + discordClient.user.username);
+	discordClient.user.setActivity("uuwuu.xyz | " + discordClient.prefix + "help");
+};
