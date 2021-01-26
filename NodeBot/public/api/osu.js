@@ -31,7 +31,7 @@ router.get("/login", (req, res) => {
 		);
 	} else {
 		res.redirect(
-			"https://osu.ppy.sh/oauth/authorize?client_id=4885&redirect_uri=http%3A%2F%2Fuuwuu.xyz%2Fpublic%2Fapi%2Fosu%2Fcallback&response_type=code&scope=identify"
+			"https://osu.ppy.sh/oauth/authorize?client_id=4884&redirect_uri=http%3A%2F%2Fuuwuu.xyz%2Fpublic%2Fapi%2Fosu%2Fcallback&response_type=code&scope=identify"
 		);
 	}
 });
