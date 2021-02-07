@@ -94,7 +94,7 @@ module.exports = {
 	 * @property {String} minecraft_uuid
 	 * @property {String} osu_id
 	 * @property {String} osu_username
-	 * @property {{settings: {privacy: {show_anilist: Boolean, show_osu: Boolean, show_minecraft: Boolean}}}}
+	 * @property {{privacy:{show_anilist: Boolean, show_osu: Boolean, show_minecraft: Boolean}}} settings
 	 */
 
 	/**
@@ -160,5 +160,19 @@ module.exports = {
 		var obj = {};
 		obj.$set = userSettings;
 		_db.collection("users").updateOne({ discord_id: id }, obj);
+	},
+
+	userBase: {
+		discord_id: "",
+		anilist_username: "",
+		anilist_id: "",
+		minecraft_uuid: "",
+		settings: {
+			privacy: {
+				show_anilist: true,
+				show_osu: true,
+				show_minecraft: true
+			}
+		}
 	}
 };

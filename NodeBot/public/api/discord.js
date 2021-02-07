@@ -84,19 +84,8 @@ router.get("/callback", async function (req, res) {
 						if (s) {
 							res.redirect(`/`);
 						} else {
-							var obj = {
-								discord_id: response.id,
-								anilist_username: "",
-								anilist_id: "",
-								minecraft_uuid: "",
-								settings: {
-									privacy: {
-										show_anilist: true,
-										show_osu: true,
-										show_minecraft: true
-									}
-								}
-							};
+							var obj = mongoUtil.userBase;
+							obj.discord_id = response.id;
 
 							mongoUtil.insertUser(obj).then((x) => {
 								res.redirect(`/`);

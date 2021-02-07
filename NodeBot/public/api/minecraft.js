@@ -23,6 +23,10 @@ router.get("/unlink", async function (req, res) {
 router.post("/login", async function (req, res) {
 	var code = req.body.code;
 
+	if (!/[0-9]{6}/.test(code)) {
+		res.redirect("/error.html");
+	}
+
 	var response = await axios.get("https://mc-oauth.net/api/api?token", { headers: { token: code } });
 	if (response.status != 200) return res.redirect("/error.html");
 	var data = response.data;

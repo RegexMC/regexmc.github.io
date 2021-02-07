@@ -7,6 +7,7 @@ const config = require("./config.json");
 const cron = require("node-cron");
 const express = require("express");
 const path = require("path");
+const mongoUtil = require("./mongoUtil");
 require("dotenv").config();
 
 const cache = cacheManager.caching({
@@ -14,8 +15,6 @@ const cache = cacheManager.caching({
 	ttl: 5 * 60,
 	max: 500
 });
-
-var mongoUtil = require("./mongoUtil");
 
 mongoUtil.connectToServer(function (err, client) {
 	if (err) console.log(err);

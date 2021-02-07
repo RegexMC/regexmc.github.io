@@ -3,6 +3,7 @@ const { Client } = require("@zikeji/hypixel");
 const utils = require("../../utils");
 const fs = require("fs");
 const request = require("request");
+const mongoUtil = require("../../mongoUtil");
 const anilistQuery = fs.readFileSync("./data/anilist/queries/anilist", "utf8");
 
 module.exports = {
@@ -15,31 +16,32 @@ module.exports = {
 	 * @param {String[]} args
 	 */
 	async run(discordClient, hypixelClient, message, args) {
-		let username;
+		var id;
+		var username;
 
-		if (args.length == 0 || message.mentions.users.size > 0) {
-			var mongoUtil = require("../../mongoUtil");
-			var db = mongoUtil.getDb();
-			var userCollection = db.collection("users");
+		if (message.mentions.users.size > 0) {
+			id = message.mentions.users.first().id;
+		} else if (args.length == 0) {
+			id = message.author.id;
+		}
 
-			var id;
-			if (message.mentions.users.size > 0) id = message.mentions.users.first().id;
-			if (!id) id = message.author.id;
+		if (id) {
+			var userSettings = await mongoUtil.userSettings(id, discordClient);
 
-			const query = {
-				discord_id: id
-			};
-
-			var user = await userCollection.findOne(query);
-
-			if (user) {
-				username = user.anilist_username;
-			} else {
-				return message.reply(utils.getErrorEmbed("Please enter a username or link your anilist profile using `>linkprofile`"));
+			if (!userSettings || !userSettings.anilist_username) {
+				return message.reply(utils.getErrorEmbed("This user does not have an anilist account linked"));
 			}
+
+			if (!userSettings.settings.privacy.show_anilist) {
+				return message.reply(utils.getErrorEmbed("This user has their anilist account hidden!"));
+			}
+
+			username = userSettings.anilist_username;
 		}
 
 		if (args.length > 0 && message.mentions.users.size == 0) username = args[0];
+
+		if (!username) return message.reply(utils.getErrorEmbed("Please include an anilist username"));
 
 		var query = anilistQuery
 			.replace("%%1%%", `name: "${username}"`)

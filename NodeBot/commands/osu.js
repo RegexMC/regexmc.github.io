@@ -3,6 +3,7 @@ const { Client } = require("@zikeji/hypixel");
 const config = require("../config.json");
 const fetch = require("node-fetch");
 const utils = require("../utils");
+const mongoUtil = require("../mongoUtil");
 
 module.exports = {
 	cooldown: 5,
@@ -14,10 +15,38 @@ module.exports = {
 	 * @param {String[]} args
 	 */
 	async run(discordClient, hypixelClient, message, args) {
-		fetch(`https://osu.ppy.sh/api/get_user?u=${message.content.trim().substring((discordClient.prefix + "osu ").length)}&k=${config.osu_api_key}`)
+		var id;
+		var username;
+
+		if (message.mentions.users.size > 0) {
+			id = message.mentions.users.first().id;
+		} else if (args.length == 0) {
+			id = message.author.id;
+		}
+
+		if (id) {
+			var userSettings = await mongoUtil.userSettings(id, discordClient);
+
+			if (!userSettings || !userSettings.osu_username) {
+				return message.reply(utils.getErrorEmbed("This user does not have an osu account linked"));
+			}
+
+			if (!userSettings.settings.privacy.show_osu) {
+				return message.reply(utils.getErrorEmbed("This user has their osu account hidden!"));
+			}
+
+			username = userSettings.osu_username;
+		}
+
+		if (args.length > 0 && message.mentions.users.size == 0) username = message.content.trim().substring((discordClient.prefix + "osu ").length);
+
+		if (!username) return message.reply(utils.getErrorEmbed("Please include an osu username"));
+
+		fetch(`https://osu.ppy.sh/api/get_user?u=${username}&k=${config.osu_api_key}`)
 			.then((response) => response.json())
 			.then((data) => {
 				var user = data[0];
+				console.log(user);
 				var embed = new Discord.MessageEmbed();
 				embed = utils.getAuthor(message, embed);
 				embed.setTitle(user.username);
@@ -30,8 +59,7 @@ module.exports = {
 				message.reply({ embed });
 			})
 			.catch((err) => {
-				var embed = utils.getErrorEmbed("Something went wrong. Invalid user?");
-				message.reply({ embed });
+				message.reply(utils.getErrorEmbed("Something went wrong. Invalid user?"));
 			});
 	}
 };

@@ -45,13 +45,11 @@ module.exports = {
 						embed
 					});
 				} else {
-					var embed = utils.getErrorEmbed("Could not find any anime by that name");
-					message.reply({ embed });
+					message.reply(utils.getErrorEmbed("Could not find any anime by that name"));
 				}
 			});
 		} else {
-			var embed = utils.getErrorEmbed("Please include an anime name or anime ID");
-			message.reply({ embed });
+			message.reply(utils.getErrorEmbed("Please include an anime name or anime ID"));
 		}
 	}
 };

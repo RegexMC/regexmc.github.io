@@ -41,7 +41,6 @@ module.exports = {
 			message.reply({ embed });
 		} else {
 			var embeds = [];
-
 			Object.keys(commands.groups).forEach((key) => {
 				var embed = new Discord.MessageEmbed();
 				embed.setTitle(key.charAt(0).toUpperCase() + key.slice(1));
@@ -86,15 +85,20 @@ async function pageHandler(allowedRespondent, message, pages, page, addReactions
 			const reaction = collected.first();
 			message.reactions.resolve(reaction.emoji.name).users.remove(allowedRespondent.id);
 
-			if (page - 1 == -1 || page + 1 == pages.length) {
-				pageHandler(allowedRespondent, message, pages, page, false);
-				return;
-			}
-
 			if (reaction.emoji.name === "◀") {
+				if (page - 1 == -1) {
+					pageHandler(allowedRespondent, message, pages, page, false);
+					return;
+				}
+
 				message.edit(pages[page - 1]);
 				pageHandler(allowedRespondent, message, pages, page - 1, false);
 			} else {
+				if (page + 1 == pages.length) {
+					pageHandler(allowedRespondent, message, pages, page, false);
+					return;
+				}
+
 				message.edit(pages[page + 1]);
 				pageHandler(allowedRespondent, message, pages, page + 1, false);
 			}

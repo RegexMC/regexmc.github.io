@@ -125,8 +125,7 @@ module.exports = {
 				});
 			});
 		} catch (e) {
-			var embed = utils.getErrorEmbed("Something went wrong downloading or modifying the image");
-			message.reply({ embed });
+			message.reply(utils.getErrorEmbed("Something went wrong downloading or modifying the image"));
 		}
 	}
 };
