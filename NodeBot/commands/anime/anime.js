@@ -78,9 +78,10 @@ function formEmbed(media) {
 	if (embed.description == null) embed.setDescription(media.description.substring(0, 203) + "\u2026");
 
 	embed.setURL(`https://anilist.co/anime/${id}/`);
-	embed.setColor(`0x${media.coverImage.color.substring(1)}`);
-	embed.setThumbnail(media.coverImage.large);
-
+	
+	if(media.coverImage.color) embed.setColor(`0x${media.coverImage.color.substring(1)}`);
+	if(media.coverImage.large) embed.setThumbnail(media.coverImage.large);
+	
 	embed.addField("Status", media.status, true);
 	embed.addField("Started Airing", `${media.startDate.year}/${media.startDate.month}/${media.startDate.day}`, true);
 	embed.addField(
