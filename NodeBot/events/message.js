@@ -3,6 +3,7 @@ const { Client } = require("@zikeji/hypixel");
 const config = require("../config.json");
 const mongoUtil = require("../mongoUtil");
 const { guildSettings } = require("../mongoUtil");
+const utils = require("../utils");
 
 /**
  * @param {Discord.Client} discordClient

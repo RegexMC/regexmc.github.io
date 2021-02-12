@@ -9,6 +9,7 @@ const express = require("express");
 const path = require("path");
 const mongoUtil = require("./mongoUtil");
 require("dotenv").config();
+const { default: axios } = require("axios");
 
 const cache = cacheManager.caching({
 	store: "memory",
@@ -57,6 +58,11 @@ mongoUtil.connectToServer(function (err, client) {
 	discordClient.snipe = new Discord.Collection();
 	discordClient.guildSettings = new Discord.Collection();
 	discordClient.userSettings = new Discord.Collection();
+	discordClient.artCache = new Discord.Collection();
+
+	axios.get("https://art.uuwuu.xyz/ws.php?format=json&method=pwg.categories.getList&recursive=true").then((response) => {
+		discordClient.artCache.set("categories", response.data.result.categories);
+	});
 
 	var logging = require("./logging");
 	logging.run(discordClient);
@@ -116,21 +122,21 @@ mongoUtil.connectToServer(function (err, client) {
 		});
 	}
 
-	function loadLoops(path) {
-		getFiles(path).forEach((file) => {
-			if (fs.statSync(`${path}/${file}`).isDirectory()) {
-				loadLoops(`${path}/${file}`);
-			} else {
-				if (!file.endsWith(".js")) return;
-				let props = require(`./loops/${file}`);
-				let loopName = file.split(".")[0];
-				cron.schedule(`*/${props.delay} * * * *`, () => {
-					props.run(discordClient, hypixelClient);
-				});
-				console.log(`Loaded loop ${loopName}`);
-			}
-		});
-	}
+	// function loadLoops(path) {
+	// 	getFiles(path).forEach((file) => {
+	// 		if (fs.statSync(`${path}/${file}`).isDirectory()) {
+	// 			loadLoops(`${path}/${file}`);
+	// 		} else {
+	// 			if (!file.endsWith(".js")) return;
+	// 			let props = require(`./loops/${file}`);
+	// 			let loopName = file.split(".")[0];
+	// 			cron.schedule(`*/${props.delay} * * * *`, () => {
+	// 				props.run(discordClient, hypixelClient);
+	// 			});
+	// 			console.log(`Loaded loop ${loopName}`);
+	// 		}
+	// 	});
+	// }
 
 	const app = express();
 	var bodyParser = require("body-parser");
