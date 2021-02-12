@@ -87,7 +87,7 @@ mongoUtil.connectToServer(function (err, client) {
 
 	loadEvents("./events/");
 	loadCommands("./commands/");
-	loadLoops("./loops/");
+	// loadLoops("./loops/");
 
 	function getFiles(path) {
 		return fs.readdirSync(path, (err, files) => {
