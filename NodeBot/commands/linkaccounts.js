@@ -28,7 +28,14 @@ module.exports = {
 
 		embed.setFooter("Link your accounts at https://uuwuu.xyz");
 
-		discordClient.userSettings.set(message.author.id, userSettings);
+		if (!userSettings) {
+			var user = mongoUtil.userBase;
+			user.discord_id = message.author.id;
+			mongoUtil.insertUser(user);
+			discordClient.userSettings.set(message.author.id, user);
+		} else {
+			discordClient.userSettings.set(message.author.id, userSettings);
+		}
 
 		message.reply({ embed });
 	}

@@ -167,6 +167,8 @@ module.exports = {
 		anilist_username: "",
 		anilist_id: "",
 		minecraft_uuid: "",
+		osu_username: "",
+		osu_id: "",
 		settings: {
 			privacy: {
 				show_anilist: true,

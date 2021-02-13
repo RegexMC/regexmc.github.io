@@ -80,7 +80,17 @@ mongoUtil.connectToServer(function (err, client) {
 
 	discordClient.on("message", (message) => {
 		if (message.content === discordClient.prefix + "clearcache" && message.author.id == "202666531111436288") {
+			discordClient.cooldowns = new Discord.Collection();
+			discordClient.snipe = new Discord.Collection();
+			discordClient.guildSettings = new Discord.Collection();
+			discordClient.userSettings = new Discord.Collection();
+			discordClient.artCache = new Discord.Collection();
+			axios.get("https://art.uuwuu.xyz/ws.php?format=json&method=pwg.categories.getList&recursive=true").then((response) => {
+				discordClient.artCache.set("categories", response.data.result.categories);
+			});
+
 			cache.reset();
+
 			message.reply("Cleared Cache");
 		}
 	});
@@ -173,6 +183,10 @@ mongoUtil.connectToServer(function (err, client) {
 
 	app.get("/about", (req, res) => {
 		res.sendFile(path.join(__dirname, "./public/about.html"));
+	});
+
+	app.get("/feedback", (req, res) => {
+		res.sendFile(path.join(__dirname, "./public/feedback.html"));
 	});
 
 	app.get("/commands", (req, res) => {
